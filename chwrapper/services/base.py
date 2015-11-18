@@ -44,7 +44,11 @@ class Service:
         session = requests.Session()
 
         session.params.update(access_token=access_token)
+        
         # CH API requires a key only, which is passed as the username
+        session.headers.update(
+            {'User-Agent': ' '.join(
+                [self.product_token, requests.utils.default_user_agent()])})
         session.auth = (access_token, '')
         return session
 

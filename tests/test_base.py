@@ -24,7 +24,7 @@ def test_service_session_os_environ(monkeypatch):
 
 def test_service_session_os_environ_caps(monkeypatch):
     """Get a session using os.environ's token"""
-    monkeypatch.setenv('COMPANIES_HOUSE_API', 'pk.test_os_environ')
+    monkeypatch.setenv('COMPANIES_HOUSE_KEY', 'pk.test_os_environ')
     session = chwrapper.Service().get_session()
     assert session.params.get('access_token') == 'pk.test_os_environ'
     monkeypatch.undo()
@@ -34,7 +34,7 @@ def test_product_token():
 
 def test_user_agent():
     session = chwrapper.Service().get_session()
-    assert chwrapper.headers['User-Agent'].startswith('chwrapper')
+    assert session.headers['User-Agent'].startswith('chwrapper')
     assert 'python-requests' in session.headers['User-Agent']
 
 @responses.activate
