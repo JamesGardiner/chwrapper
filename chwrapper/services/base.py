@@ -39,13 +39,19 @@ class Service:
     def get_session(self, token=None, env=None):
         access_token = (
             token or
-            (env or cd os.environ).get('MapboxAccessToken') or
-            (env or os.environ).get('MAPBOX_ACCESS_TOKEN'))
+            (env or os.environ).get('CompaniesHouseKey') or
+            (env or os.environ).get('COMPANIES_HOUSE_KEY'))
         session = requests.Session()
 
+        session.params.update(access_token=access_token)
         # CH API requires a key only, which is passed as the username
         session.auth = (access_token, '')
         return session
+
+    @property
+    def product_token(self):
+        """A product token for use in User-Agent headers."""
+        return 'chwrapper/{0}'.format(__version__)
 
     def handle_http_error(self, response, custom_messages=None,
                           raise_for_status=False):
