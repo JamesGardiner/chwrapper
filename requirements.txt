@@ -1,0 +1,8 @@
+cookies==2.2.1
+coverage==4.0.2
+py==1.4.30
+pytest==2.8.2
+pytest-cov==2.2.0
+requests==2.8.1
+responses==0.5.0
+wheel==0.24.0

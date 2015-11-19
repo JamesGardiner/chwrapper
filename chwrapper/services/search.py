@@ -26,7 +26,7 @@ from .base import Service
 
 class Search(Service):
 
-    BASE_URI = 'https://api.companieshouse.gov.uk/search/'
+    BASE_URI = "https://api.companieshouse.gov.uk/"
 
     def search(self,
                term,
@@ -34,9 +34,9 @@ class Search(Service):
                start_index=None):
 
         params = {
-            'q': term,
-            'items_per_page': n_items,
-            'start_index': start_index
+            "q": term,
+            "items_per_page": n_items,
+            "start_index": start_index
         }
 
         res = self.session.get(self.baseuri, params=params, auth=self.session.auth)
@@ -47,9 +47,9 @@ class Search(Service):
 class CompanySearch(Search):
     def __init__(self, access_token=None):
         self.session = self.get_session(access_token)
-        self.baseuri = self.BASE_URI + 'companies'
+        self.baseuri = self.BASE_URI + "search/companies"
 
 class OfficerSearch(Search):
     def __init__(self, access_token=None):
         self.session = self.get_session(access_token)
-        self.baseuri = self.BASE_URI + 'officers'
+        self.baseuri = self.BASE_URI + "search/officers"
