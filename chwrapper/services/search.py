@@ -23,7 +23,11 @@
 
 from .base import Service
 
+
 class Search(Service):
+
+    BASE_URI = 'https://api.companieshouse.gov.uk/search/'
+
     def search(self,
                term,
                n_items=None,
@@ -43,9 +47,9 @@ class Search(Service):
 class CompanySearch(Search):
     def __init__(self, access_token=None):
         self.session = self.get_session(access_token)
-        self.baseuri = 'https://api.companieshouse.gov.uk/search/companies'
+        self.baseuri = self.BASE_URI + 'companies'
 
 class OfficerSearch(Search):
     def __init__(self, access_token=None):
         self.session = self.get_session(access_token)
-        self.baseuri = 'https://api.companieshouse.gov.uk/search/officers'
+        self.baseuri = self.BASE_URI + 'officers'
