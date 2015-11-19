@@ -24,10 +24,6 @@
 from .base import Service
 
 class Search(Service):
-    def __init__(self, access_token=None):
-        self.baseuri = 'https://api.companieshouse.gov.uk/search/companies'
-        self.session = self.get_session(access_token)
-
     def search(self,
                term,
                n_items=None,
@@ -35,7 +31,7 @@ class Search(Service):
 
         params = {
             'q': term,
-            #'items_per_page': n_items,
+            'items_per_page': n_items,
             'start_index': start_index
         }
 
@@ -43,3 +39,13 @@ class Search(Service):
         self.handle_http_error(res)
 
         return res
+
+class CompanySearch(Search):
+    def __init__(self, access_token=None):
+        self.session = self.get_session(access_token)
+        self.baseuri = 'https://api.companieshouse.gov.uk/search/companies'
+
+class OfficerSearch(Search):
+    def __init__(self, access_token=None):
+        self.session = self.get_session(access_token)
+        self.baseuri = 'https://api.companieshouse.gov.uk/search/officers'

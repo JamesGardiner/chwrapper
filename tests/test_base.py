@@ -30,15 +30,18 @@ def test_service_session_os_environ_caps(monkeypatch):
     monkeypatch.undo()
 
 def test_product_token():
+    """Get the product version"""
     assert chwrapper.Service().product_token == 'chwrapper/{0}'.format(chwrapper.__version__)
 
 def test_user_agent():
+    """Check User-agent correctly assigned"""
     session = chwrapper.Service().get_session()
     assert session.headers['User-Agent'].startswith('chwrapper')
     assert 'python-requests' in session.headers['User-Agent']
 
 @responses.activate
 def test_custom_messages():
+    """Check status code error messaging"""
     fakeurl = 'https://example.com'
     responses.add(responses.GET, fakeurl, status=401)
     service = chwrapper.Service()

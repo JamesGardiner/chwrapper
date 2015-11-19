@@ -1,0 +1,579 @@
+{
+  "start_index": 0,
+  "items_per_page": 20,
+  "kind": "search#companies",
+  "page_number": 1,
+  "total_results": 87,
+  "items": [
+    {
+      "company_type": "ltd",
+      "kind": "searchresults#company",
+      "matches": {
+        "title": [
+          1,
+          6
+        ]
+      },
+      "title": "PYTHON LTD",
+      "description_identifier": [
+        "dissolved-on"
+      ],
+      "company_number": "05226269",
+      "date_of_creation": "2004-09-09",
+      "links": {
+        "self": "/company/05226269"
+      },
+      "snippet": "8 Alne Bank Road, Alcester, B49 6QU",
+      "address": {
+        "address_line_1": "8 Alne Bank Road",
+        "postal_code": "B49 6QU",
+        "address_line_2": "Alcester"
+      },
+      "company_status": "dissolved",
+      "date_of_cessation": "2010-02-09",
+      "description": "05226269 - Dissolved on  9 February 2010"
+    },
+    {
+      "kind": "searchresults#company",
+      "company_type": "ltd",
+      "matches": {
+        "title": [
+          1,
+          6
+        ]
+      },
+      "snippet": "First Floor,, Charlotte House,, 10, Charlotte Street,, Manchester., M1 4EX",
+      "links": {
+        "self": "/company/02054368"
+      },
+      "date_of_creation": "1986-09-11",
+      "company_number": "02054368",
+      "description_identifier": [
+        "dissolved-on"
+      ],
+      "title": "PYTHON LIMITED",
+      "date_of_cessation": "2004-06-22",
+      "description": "02054368 - Dissolved on 22 June 2004",
+      "address": {
+        "address_line_1": "First Floor,",
+        "region": "Manchester.",
+        "postal_code": "M1 4EX",
+        "address_line_2": "Charlotte House,",
+        "locality": "10, Charlotte Street,"
+      },
+      "company_status": "dissolved"
+    },
+    {
+      "matches": {
+        "title": [
+          1,
+          6
+        ]
+      },
+      "company_type": "ltd",
+      "kind": "searchresults#company",
+      "description": "07359966 - Incorporated on 27 August 2010",
+      "company_status": "active",
+      "address": {
+        "address_line_1": "International House 124 Cromwell Road",
+        "postal_code": "SW7 4ET",
+        "address_line_2": "Kensington",
+        "locality": "London"
+      },
+      "date_of_creation": "2010-08-27",
+      "title": "PYTHON LIMITED",
+      "description_identifier": [
+        "incorporated-on"
+      ],
+      "company_number": "07359966",
+      "links": {
+        "self": "/company/07359966"
+      },
+      "snippet": "International House 124 Cromwell Road, Kensington, London, SW7 4ET"
+    },
+    {
+      "matches": {
+        "title": [
+          1,
+          6
+        ]
+      },
+      "company_type": "ltd",
+      "kind": "searchresults#company",
+      "description": "05475446 - Dissolved on 27 July 2010",
+      "date_of_cessation": "2010-07-27",
+      "address": {
+        "address_line_2": "London",
+        "address_line_1": "483 Green Lanes",
+        "postal_code": "N13 4BS"
+      },
+      "company_status": "dissolved",
+      "date_of_creation": "2005-06-08",
+      "title": "PYTHON CLUB LTD.",
+      "description_identifier": [
+        "dissolved-on"
+      ],
+      "company_number": "05475446",
+      "snippet": "483 Green Lanes, London, N13 4BS",
+      "links": {
+        "self": "/company/05475446"
+      }
+    },
+    {
+      "address": {
+        "locality": "Barnsley",
+        "address_line_2": "Oaks Lane",
+        "region": "South Yorkshire",
+        "address_line_1": "Unit 16 Oaks Businees Park",
+        "postal_code": "S71 1HT"
+      },
+      "company_status": "dissolved",
+      "description": "05653476 - Dissolved on 29 January 2010",
+      "date_of_cessation": "2010-01-29",
+      "links": {
+        "self": "/company/05653476"
+      },
+      "snippet": "Unit 16 Oaks Businees Park, Oaks Lane, Barnsley, South Yorkshire, S71 1HT",
+      "description_identifier": [
+        "dissolved-on"
+      ],
+      "company_number": "05653476",
+      "title": "PYTHON DESIGN LTD",
+      "date_of_creation": "2005-12-14",
+      "matches": {
+        "title": [
+          1,
+          6
+        ]
+      },
+      "kind": "searchresults#company",
+      "company_type": "ltd"
+    },
+    {
+      "matches": {
+        "title": [
+          1,
+          6
+        ]
+      },
+      "company_type": "ltd",
+      "kind": "searchresults#company",
+      "description": "07951669 - Incorporated on 16 February 2012",
+      "company_status": "active",
+      "address": {
+        "locality": "Rochdale",
+        "postal_code": "OL16 2BX",
+        "region": "Lancashire",
+        "address_line_1": "98 Ramsay Street"
+      },
+      "date_of_creation": "2012-02-16",
+      "description_identifier": [
+        "incorporated-on"
+      ],
+      "title": "PYTHON LOCUMS LTD",
+      "company_number": "07951669",
+      "links": {
+        "self": "/company/07951669"
+      },
+      "snippet": "98 Ramsay Street, Rochdale, Lancashire, OL16 2BX"
+    },
+    {
+      "company_type": "ltd",
+      "kind": "searchresults#company",
+      "matches": {
+        "title": [
+          1,
+          6
+        ]
+      },
+      "date_of_creation": "2015-09-11",
+      "company_number": "09773448",
+      "description_identifier": [
+        "incorporated-on"
+      ],
+      "title": "PYTHON IT LIMITED",
+      "snippet": "Greenhill Villa Sofrydd Road, Crumlin, Newport, Gwent, NP11 5DW",
+      "links": {
+        "self": "/company/09773448"
+      },
+      "description": "09773448 - Incorporated on 11 September 2015",
+      "company_status": "active",
+      "address": {
+        "region": "Gwent",
+        "address_line_1": "Greenhill Villa Sofrydd Road",
+        "postal_code": "NP11 5DW",
+        "address_line_2": "Crumlin",
+        "locality": "Newport"
+      }
+    },
+    {
+      "kind": "searchresults#company",
+      "company_type": "ltd",
+      "matches": {
+        "title": [
+          1,
+          6
+        ]
+      },
+      "snippet": "60 Warwick Road, Earls Court, London, Sw5",
+      "links": {
+        "self": "/company/03527145"
+      },
+      "description_identifier": [
+        "dissolved-on"
+      ],
+      "title": "PYTHON U.K LIMITED",
+      "company_number": "03527145",
+      "date_of_creation": "1998-03-13",
+      "address": {
+        "region": "Sw5",
+        "address_line_1": "60 Warwick Road",
+        "locality": "London",
+        "address_line_2": "Earls Court"
+      },
+      "company_status": "dissolved",
+      "description": "03527145 - Dissolved on 21 December 1999",
+      "date_of_cessation": "1999-12-21"
+    },
+    {
+      "matches": {
+        "title": [
+          1,
+          6
+        ]
+      },
+      "kind": "searchresults#company",
+      "company_type": "ltd",
+      "company_status": "dissolved",
+      "address": {
+        "address_line_2": "NUNEATON ROAD",
+        "locality": "DAGENHAM",
+        "postal_code": "RM9 6DX",
+        "address_line_1": "19"
+      },
+      "description": "07893254 - Dissolved on 10 December 2013",
+      "date_of_cessation": "2013-12-10",
+      "snippet": "19, Nuneaton Road, Dagenham, RM9 6DX",
+      "links": {
+        "self": "/company/07893254"
+      },
+      "company_number": "07893254",
+      "description_identifier": [
+        "dissolved-on"
+      ],
+      "title": "PYTHON DESIGNS LTD",
+      "date_of_creation": "2011-12-29"
+    },
+    {
+      "links": {
+        "self": "/company/03672299"
+      },
+      "snippet": "5 Forest Way, Winford, Sandown, Isle Of Wight, PO36 0JN",
+      "description_identifier": [
+        "dissolved-on"
+      ],
+      "company_number": "03672299",
+      "title": "PYTHON AIR LIMITED",
+      "date_of_creation": "1998-11-23",
+      "address": {
+        "postal_code": "PO36 0JN",
+        "address_line_1": "5 Forest Way",
+        "region": "Isle Of Wight",
+        "address_line_2": "Winford",
+        "locality": "Sandown"
+      },
+      "company_status": "dissolved",
+      "date_of_cessation": "2004-06-22",
+      "description": "03672299 - Dissolved on 22 June 2004",
+      "kind": "searchresults#company",
+      "company_type": "ltd",
+      "matches": {
+        "title": [
+          1,
+          6
+        ]
+      }
+    },
+    {
+      "description": "09488143 - Incorporated on 13 March 2015",
+      "address": {
+        "locality": "Bolton",
+        "address_line_1": "32-36 Chorley New Road",
+        "region": "Lancashire",
+        "postal_code": "BL1 4AP"
+      },
+      "company_status": "active",
+      "snippet": "32-36 Chorley New Road, Bolton, Lancashire, BL1 4AP",
+      "links": {
+        "self": "/company/09488143"
+      },
+      "date_of_creation": "2015-03-13",
+      "description_identifier": [
+        "incorporated-on"
+      ],
+      "title": "PYTHON JACKSON LTD",
+      "company_number": "09488143",
+      "matches": {
+        "title": [
+          1,
+          6
+        ]
+      },
+      "kind": "searchresults#company",
+      "company_type": "ltd"
+    },
+    {
+      "address": {
+        "address_line_2": "Bramhall",
+        "locality": "Stockport",
+        "postal_code": "SK7 2DH",
+        "address_line_1": "Carpenter Court 1 Maple Road",
+        "region": "Cheshire"
+      },
+      "company_status": "active",
+      "description": "07551995 - Incorporated on  4 March 2011",
+      "description_identifier": [
+        "incorporated-on"
+      ],
+      "company_number": "07551995",
+      "title": "PYTHON SYSTEMS LTD",
+      "date_of_creation": "2011-03-04",
+      "snippet": "Carpenter Court 1 Maple Road, Bramhall, Stockport, Cheshire, SK7 2DH",
+      "links": {
+        "self": "/company/07551995"
+      },
+      "matches": {
+        "title": [
+          1,
+          6
+        ]
+      },
+      "company_type": "ltd",
+      "kind": "searchresults#company"
+    },
+    {
+      "kind": "searchresults#company",
+      "company_type": "ltd",
+      "matches": {
+        "title": [
+          1,
+          6
+        ]
+      },
+      "links": {
+        "self": "/company/08771000"
+      },
+      "snippet": "196 High Street North, East Ham, London, E6 2JA",
+      "description_identifier": [
+        "dissolved-on"
+      ],
+      "company_number": "08771000",
+      "title": "PYTHON CARS LIMITED",
+      "date_of_creation": "2013-11-12",
+      "address": {
+        "locality": "London",
+        "address_line_2": "East Ham",
+        "address_line_1": "196 High Street North",
+        "postal_code": "E6 2JA"
+      },
+      "company_status": "dissolved",
+      "date_of_cessation": "2015-06-23",
+      "description": "08771000 - Dissolved on 23 June 2015"
+    },
+    {
+      "kind": "searchresults#company",
+      "company_type": "ltd",
+      "matches": {
+        "title": [
+          1,
+          6
+        ]
+      },
+      "links": {
+        "self": "/company/09859692"
+      },
+      "snippet": "196 High Street North, East Ham, London, E6 2JA",
+      "company_number": "09859692",
+      "description_identifier": [
+        "incorporated-on"
+      ],
+      "title": "PYTHON CARS LIMITED",
+      "date_of_creation": "2015-11-06",
+      "address": {
+        "address_line_1": "196 High Street North",
+        "postal_code": "E6 2JA",
+        "locality": "London",
+        "address_line_2": "East Ham"
+      },
+      "company_status": "active",
+      "description": "09859692 - Incorporated on  6 November 2015"
+    },
+    {
+      "kind": "searchresults#company",
+      "company_type": "ltd",
+      "matches": {
+        "title": [
+          1,
+          6
+        ]
+      },
+      "snippet": "7 Thornton Street North, Manchester, M40 8JT",
+      "links": {
+        "self": "/company/09720339"
+      },
+      "company_number": "09720339",
+      "description_identifier": [
+        "incorporated-on"
+      ],
+      "title": "PYTHON CLOTHING LTD",
+      "date_of_creation": "2015-08-06",
+      "address": {
+        "postal_code": "M40 8JT",
+        "address_line_1": "7 Thornton Street North",
+        "locality": "Manchester"
+      },
+      "company_status": "active",
+      "description": "09720339 - Incorporated on  6 August 2015"
+    },
+    {
+      "snippet": "Rhinos Gymnasium Ltd, Unit 22, Stamford, PE9 1XP",
+      "links": {
+        "self": "/company/09046883"
+      },
+      "date_of_creation": "2014-05-19",
+      "title": "PYTHON LIFESTYLE LTD",
+      "description_identifier": [
+        "incorporated-on"
+      ],
+      "company_number": "09046883",
+      "description": "09046883 - Incorporated on 19 May 2014",
+      "company_status": "active",
+      "address": {
+        "address_line_1": "Rhinos Gymnasium Ltd",
+        "postal_code": "PE9 1XP",
+        "address_line_2": "Unit 22",
+        "locality": "Stamford"
+      },
+      "kind": "searchresults#company",
+      "company_type": "ltd",
+      "matches": {
+        "title": [
+          1,
+          6
+        ]
+      }
+    },
+    {
+      "links": {
+        "self": "/company/08860376"
+      },
+      "snippet": "5 Hazel Close, Thorrington, Colchester, CO7 8HJ",
+      "date_of_creation": "2014-01-24",
+      "description_identifier": [
+        "incorporated-on"
+      ],
+      "company_number": "08860376",
+      "title": "PYTHON SOLUTIONS LTD",
+      "description": "08860376 - Incorporated on 24 January 2014",
+      "address": {
+        "address_line_2": "Thorrington",
+        "locality": "Colchester",
+        "address_line_1": "5 Hazel Close",
+        "postal_code": "CO7 8HJ"
+      },
+      "company_status": "active",
+      "kind": "searchresults#company",
+      "company_type": "ltd",
+      "matches": {
+        "title": [
+          1,
+          6
+        ]
+      }
+    },
+    {
+      "kind": "searchresults#company",
+      "company_type": "ltd",
+      "matches": {
+        "title": [
+          1,
+          6
+        ]
+      },
+      "snippet": "27 Ovington Square, London, SW3 1LJ",
+      "links": {
+        "self": "/company/00932123"
+      },
+      "description_identifier": [
+        "incorporated-on"
+      ],
+      "company_number": "00932123",
+      "title": "PYTHON MUSIC LIMITED",
+      "date_of_creation": "1968-05-16",
+      "address": {
+        "address_line_1": "27 Ovington Square",
+        "postal_code": "SW3 1LJ",
+        "address_line_2": "London"
+      },
+      "company_status": "active",
+      "description": "00932123 - Incorporated on 16 May 1968"
+    },
+    {
+      "kind": "searchresults#company",
+      "company_type": "ltd",
+      "matches": {
+        "title": [
+          1,
+          6
+        ]
+      },
+      "snippet": "Robson Rhodes, Colwyn Chambers, 19 York Street,Manchester, M2 3BA",
+      "links": {
+        "self": "/company/01177074"
+      },
+      "title": "PYTHON CRANES LIMITED",
+      "description_identifier": [
+        "dissolved-on"
+      ],
+      "company_number": "01177074",
+      "date_of_creation": "1974-07-11",
+      "address": {
+        "locality": "19 York Street,Manchester",
+        "address_line_2": "Colwyn Chambers",
+        "address_line_1": "Robson Rhodes",
+        "postal_code": "M2 3BA"
+      },
+      "company_status": "dissolved",
+      "description": "01177074 - Dissolved on 27 January 1998",
+      "date_of_cessation": "1998-01-27"
+    },
+    {
+      "kind": "searchresults#company",
+      "company_type": "ltd",
+      "matches": {
+        "title": [
+          1,
+          6
+        ]
+      },
+      "links": {
+        "self": "/company/09276870"
+      },
+      "snippet": "220c Blythe Road, London, W14 0HH",
+      "company_number": "09276870",
+      "description_identifier": [
+        "dissolved-on"
+      ],
+      "title": "PYTHON CONSULTING LTD",
+      "date_of_creation": "2014-10-23",
+      "company_status": "dissolved",
+      "address": {
+        "postal_code": "W14 0HH",
+        "address_line_1": "220c Blythe Road",
+        "locality": "London"
+      },
+      "date_of_cessation": "2015-08-25",
+      "description": "09276870 - Dissolved on 25 August 2015"
+    }
+  ]
+}
