@@ -25,6 +25,8 @@ from .base import Service
 
 
 class Search(Service):
+    """A base search class.
+    """
 
     BASE_URI = "https://api.companieshouse.gov.uk/"
 
@@ -32,7 +34,13 @@ class Search(Service):
                term,
                n_items=None,
                start_index=None):
+        """A search function that returns a json object.
 
+        Args:
+            term (str): A string to search for.
+            n_items (int): The number of search results to return per page.
+            start_index (int): The index of the first result item to return.
+        """
         params = {
             "q": term,
             "items_per_page": n_items,
