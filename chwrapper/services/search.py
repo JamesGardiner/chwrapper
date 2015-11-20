@@ -25,31 +25,64 @@ from .base import Service
 
 
 class Search(Service):
-
-    BASE_URI = "https://api.companieshouse.gov.uk/"
+    def __init__(self, access_token=None):
+        super(Search, self).__init__()
+        self.session = self.get_session(access_token)
 
     def search(self,
                term,
                n_items=None,
                start_index=None):
-
         params = {
             "q": term,
             "items_per_page": n_items,
             "start_index": start_index
         }
 
-        res = self.session.get(self.baseuri, params=params, auth=self.session.auth)
+        res = self.session.get(self.baseuri, params=params)
+        self.handle_http_error(res)
+
+        return res
+
+class CompanyAddress(Search):
+    def __init__(self, company_number, access_token=None):
+        super(CompanyAddress, self).__init__(access_token)
+        self.company_number = company_number
+        self.baseuri = self.BASE_URI + "company/{}/registered-office-address".format(self.company_number)
+
+    def search_address(self):
+        res = self.session.get(self.baseuri)
+        self.handle_http_error(res)
+
+        return res  
+
+
+class CompanyInfo(Search):
+    """Search for company information using a company number."""
+    def __init__(self, access_token=None):
+        super(CompanyInfo, self).__init__(access_token)
+        self.baseuri = self.BASE_URI + 'company/'
+
+    def search_profile(self, num):
+        res = self.session.get(self.baseuri + num)
+        self.handle_http_error(res)
+
+        return res
+
+    def search_address(self, num):
+        res = self.session.get(self.baseuri + num + '/registered-office-address')
         self.handle_http_error(res)
 
         return res
 
 class CompanySearch(Search):
     def __init__(self, access_token=None):
-        self.session = self.get_session(access_token)
+        super(CompanySearch, self).__init__(access_token)
         self.baseuri = self.BASE_URI + "search/companies"
+
 
 class OfficerSearch(Search):
     def __init__(self, access_token=None):
-        self.session = self.get_session(access_token)
-        self.baseuri = self.BASE_URI + "search/officers"
+        super(OfficerSearch, self).__init__(access_token)
+        self.baseuri = self.BASE_URI + "search/officers"        
+  

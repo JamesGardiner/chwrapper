@@ -36,6 +36,9 @@ class Service:
     A base service class for interacting with the Companies House API.
     """
 
+    def __init__(self):
+        self.BASE_URI = "https://api.companieshouse.gov.uk/"
+
     def get_session(self, token=None, env=None):
         access_token = (
             token or
