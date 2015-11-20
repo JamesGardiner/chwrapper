@@ -31,7 +31,7 @@ import requests
 from .. import __version__
 
 
-class Service:
+class Service(object):
     """
     A base service class for interacting with the Companies House API.
     """
