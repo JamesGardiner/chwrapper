@@ -1,0 +1,36 @@
+{
+  "type": "ltd",
+  "registered_office_address": {
+    "address_line_1": "49 London Road",
+    "locality": "West Sussex",
+    "address_line_2": "Horsham",
+    "postal_code": "BH12 1AN"
+  },
+  "has_been_liquidated": false,
+  "last_full_members_list_date": "1995-02-04",
+  "company_number": "02894655",
+  "sic_codes": [
+    "7220"
+  ],
+  "company_name": "INTAGLIO SYSTEMS LIMITED",
+  "accounts": {
+    "accounting_reference_date": {
+      "day": "31",
+      "month": "01"
+    },
+    "last_accounts": {
+      "type": "small",
+      "made_up_to": "1996-01-31"
+    }
+  },
+  "undeliverable_registered_office_address": false,
+  "annual_return": {
+    "last_made_up_to": "1995-02-04"
+  },
+  "jurisdiction": "england-wales",
+  "date_of_creation": "1994-02-04",
+  "etag": "4f910229f78a9e4f6fe77b64e4e1835e5fb96ff3",
+  "company_status": "dissolved",
+  "date_of_cessation": "1996-09-03",
+  "can_file": false
+}
