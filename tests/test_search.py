@@ -19,7 +19,7 @@ def test_company_search():
         body=body,
         content_type="application/json")
 
-    res = chwrapper.CompanySearch(access_token="pk.test").search("Python")
+    res = chwrapper.Search(access_token="pk.test").search("Python")
 
     assert res.status_code == 200
     assert sorted(res.json().keys()) == ["items", "items_per_page", "kind", "page_number", "start_index", "total_results"]
@@ -44,7 +44,7 @@ def test_company_profile():
 
     assert res.status_code == 200
     assert sorted(res.json()["accounts"]) == ['accounting_reference_date', 'last_accounts']
-    
+
 
 @responses.activate
 def test_officer_search():

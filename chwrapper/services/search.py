@@ -25,9 +25,12 @@ from .base import Service
 
 
 class Search(Service):
+    """Search for companies by name.
+    """
     def __init__(self, access_token=None):
         super(Search, self).__init__()
         self.session = self.get_session(access_token)
+        self.baseuri = self.BASE_URI + 'search/companies'
 
     def search(self,
                term,
@@ -40,26 +43,16 @@ class Search(Service):
             "start_index": start_index
         }
 
-        res = self.session.get(self.baseuri, params=params)
-        self.handle_http_error(res)
+        res = self.session.get(self.baseuri,
+                               params=params)
 
-        return res
-
-class CompanyAddress(Search):
-    def __init__(self, company_number, access_token=None):
-        super(CompanyAddress, self).__init__(access_token)
-        self.company_number = company_number
-        self.baseuri = self.BASE_URI + "company/{}/registered-office-address".format(self.company_number)
-
-    def search_address(self):
-        res = self.session.get(self.baseuri)
         self.handle_http_error(res)
 
         return res
 
 
 class CompanyInfo(Search):
-    """Search for company information using a company number."""
+    """Search for company information by company number."""
     def __init__(self, access_token=None):
         super(CompanyInfo, self).__init__(access_token)
         self.baseuri = self.BASE_URI + 'company/'
@@ -76,14 +69,8 @@ class CompanyInfo(Search):
 
         return res
 
-class CompanySearch(Search):
-    def __init__(self, access_token=None):
-        super(CompanySearch, self).__init__(access_token)
-        self.baseuri = self.BASE_URI + "search/companies"
-
 
 class OfficerSearch(Search):
     def __init__(self, access_token=None):
         super(OfficerSearch, self).__init__(access_token)
         self.baseuri = self.BASE_URI + "search/officers"
-
