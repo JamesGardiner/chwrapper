@@ -4,6 +4,7 @@ import responses
 
 import chwrapper
 
+
 @responses.activate
 def test_company_search():
     "Searching by company name works"
