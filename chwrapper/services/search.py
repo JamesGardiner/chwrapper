@@ -23,23 +23,32 @@
 
 from .base import Service
 
+"""
+TODO:
+  - Company filing history
+  - Company insovlency
+  - Company charges
+  - Officer appointments
 
-class Search(Service):
+"""
+
+
+class CompanySearch(Service):
     """Search for companies by name.
     """
     def __init__(self, access_token=None):
-        super(Search, self).__init__()
+        super(CompanySearch, self).__init__()
         self.session = self.get_session(access_token)
         self.baseuri = self.BASE_URI + 'search/companies'
 
     def search(self,
                term,
-               n_items=None,
+               items_per_page=None,
                start_index=None):
 
         params = {
             "q": term,
-            "items_per_page": n_items,
+            "items_per_page": items_per_page,
             "start_index": start_index
         }
 
@@ -51,26 +60,47 @@ class Search(Service):
         return res
 
 
-class CompanyInfo(Search):
+class OfficerSearch(CompanySearch):
+    """Search for officers registered with companies house."""
+    def __init__(self, access_token=None):
+        super(OfficerSearch, self).__init__()
+        self.session = self.get_session(access_token)
+        self.baseuri = self.BASE_URI + 'search/officers'
+
+
+class CompanyInfo(CompanySearch):
     """Search for company information by company number."""
     def __init__(self, access_token=None):
         super(CompanyInfo, self).__init__(access_token)
         self.baseuri = self.BASE_URI + 'company/'
 
-    def search_profile(self, num):
+    def get_profile(self, num):
         res = self.session.get(self.baseuri + num)
         self.handle_http_error(res)
 
         return res
 
-    def search_address(self, num):
+    def get_address(self, num):
         res = self.session.get(self.baseuri + num + '/registered-office-address')
         self.handle_http_error(res)
 
         return res
 
+    def get_officers(self,
+                       num,
+                       items_per_page=None,
+                       start_index=None,
+                       order_by=None):
 
-class OfficerSearch(Search):
-    def __init__(self, access_token=None):
-        super(OfficerSearch, self).__init__(access_token)
-        self.baseuri = self.BASE_URI + "search/officers"
+        params = {
+            "items_per_page": items_per_page,
+            "start_index": start_index,
+            "order_by": order_by
+        }
+
+        res = self.session.get(self.baseuri
+                               + num
+                               + '/officers',
+                               params=params)
+
+        return res

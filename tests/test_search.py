@@ -4,6 +4,7 @@ import responses
 
 import chwrapper
 
+
 @responses.activate
 def test_company_search():
     "Searching by company name works"
@@ -19,11 +20,34 @@ def test_company_search():
         body=body,
         content_type="application/json")
 
-    res = chwrapper.Search(access_token="pk.test").search("Python")
+    res = chwrapper.CompanySearch(access_token="pk.test").search("Python")
 
     assert res.status_code == 200
     assert sorted(res.json().keys()) == ["items", "items_per_page", "kind", "page_number", "start_index", "total_results"]
     assert sorted(res.json()["items"][0].keys()) == ["address", "company_number", "company_status", "company_type", "date_of_cessation", "date_of_creation", "description", "description_identifier", "kind", "links", "matches", "snippet", "title"]
+
+
+@responses.activate
+def test_officer_search():
+    """Searching by officer name works."""
+
+    with open("tests/officer_results.json") as results:
+        body = results.read()
+
+    responses.add(
+        responses.GET,
+        "https://api.companieshouse.gov.uk/search/officers?access_token=pk.test&q=John",
+        match_querystring=True,
+        status=200,
+        body=body,
+        content_type="application/json")
+
+    res = chwrapper.OfficerSearch(access_token="pk.test").search("John")
+
+    assert res.status_code == 200
+    assert sorted(res.json().keys()) == ["items", "items_per_page", "kind", "page_number", "start_index", "total_results"]
+    assert sorted(res.json()["items"][0].keys()) == ["address", "appointment_count", "date_of_birth", "description", "description_identifiers", "kind", "links", "matches", "snippet", "title"]
+
 
 @responses.activate
 def test_company_profile():
@@ -40,28 +64,28 @@ def test_company_profile():
         body=body,
         content_type="application/json")
 
-    res = chwrapper.CompanyInfo(access_token="pk.test").search_profile('12345')
+    res = chwrapper.CompanyInfo(access_token="pk.test").get_profile('12345')
 
     assert res.status_code == 200
     assert sorted(res.json()["accounts"]) == ['accounting_reference_date', 'last_accounts']
 
 
 @responses.activate
-def test_officer_search():
-    "Searching by officer name works"
+def test_search_officers():
+    "Searching for officers by company number works"
 
     with open("tests/officer_results.json") as results:
         body = results.read()
 
     responses.add(
         responses.GET,
-        "https://api.companieshouse.gov.uk/search/officers?access_token=pk.test&q=John",
+        "https://api.companieshouse.gov.uk/company/12345/officers?access_token=pk.test",
         match_querystring=True,
         status=200,
         body=body,
         content_type="application/json")
 
-    res = chwrapper.OfficerSearch(access_token="pk.test").search("John")
+    res = chwrapper.CompanyInfo(access_token="pk.test").get_officers("12345")
 
     assert res.status_code == 200
     assert sorted(res.json().keys()) == ["items", "items_per_page", "kind", "page_number", "start_index", "total_results"]
@@ -84,7 +108,7 @@ def test_registered_office():
         body=body,
         content_type="application/json")
 
-    res = chwrapper.CompanyInfo(access_token="pk.test").search_address("12345")
+    res = chwrapper.CompanyInfo(access_token="pk.test").get_address("12345")
     assert res.status_code == 200
 
     for key in sorted(res.json().keys()):
