@@ -37,7 +37,7 @@ class Service(object):
     """
 
     def __init__(self):
-        self.BASE_URI = "https://api.companieshouse.gov.uk/"
+        self._BASE_URI = "https://api.companieshouse.gov.uk/"
 
     def get_session(self, token=None, env=None):
         access_token = (

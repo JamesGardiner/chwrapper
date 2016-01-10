@@ -39,7 +39,7 @@ class CompanySearch(Service):
     def __init__(self, access_token=None):
         super(CompanySearch, self).__init__()
         self.session = self.get_session(access_token)
-        self.baseuri = self.BASE_URI + 'search/companies'
+        self.baseuri = self._BASE_URI + 'search/companies'
 
     def search(self,
                term,
@@ -65,14 +65,14 @@ class OfficerSearch(CompanySearch):
     def __init__(self, access_token=None):
         super(OfficerSearch, self).__init__()
         self.session = self.get_session(access_token)
-        self.baseuri = self.BASE_URI + 'search/officers'
+        self.baseuri = self._BASE_URI + 'search/officers'
 
 
 class CompanyInfo(CompanySearch):
     """Search for company information by company number."""
     def __init__(self, access_token=None):
         super(CompanyInfo, self).__init__(access_token)
-        self.baseuri = self.BASE_URI + 'company/'
+        self.baseuri = self._BASE_URI + 'company/'
 
     def get_profile(self, num):
         res = self.session.get(self.baseuri + num)
@@ -87,10 +87,10 @@ class CompanyInfo(CompanySearch):
         return res
 
     def get_officers(self,
-                       num,
-                       items_per_page=None,
-                       start_index=None,
-                       order_by=None):
+                     num,
+                     items_per_page=None,
+                     start_index=None,
+                     order_by=None):
 
         params = {
             "items_per_page": items_per_page,
