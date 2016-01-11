@@ -1,46 +1,47 @@
 {
-  "items_per_page": 25,
-  "start_index": 0,
   "total_count": 1,
-  "filing_history_status": "filing-history-available",
   "items": [
     {
       "category": "incorporation",
+      "pages": 7,
+      "type": "NEWINC",
       "barcode": "X44LAQN7",
+      "description": "incorporation-company",
       "links": {
         "self": "/company/09528727/filing-history/MzEyMDU5ODg0MGFkaXF6a2N4",
         "document_metadata": "https://document-api.companieshouse.gov.uk/document/2YQ5GvVAZsmuMk3RAySKoRGASWqrLh8O8qW90p8ryww"
       },
-      "transaction_id": "MzEyMDU5ODg0MGFkaXF6a2N4",
-      "description": "incorporation-company",
-      "date": "2015-04-07",
-      "type": "NEWINC",
-      "pages": 7,
       "associated_filings": [
         {
-          "action_date": 1428364800000,
+          "category": "capital",
           "description_values": {
             "date": "2015-04-07",
             "capital": [
               {
-                "figure": "1",
-                "currency": "GBP"
+                "currency": "GBP",
+                "figure": "1"
               }
             ]
           },
-          "original_description": "07/04/15 Statement of Capital;GBP 1",
-          "description": "statement-of-capital",
-          "category": "capital",
           "type": "SH01",
+          "description": "statement-of-capital",
+          "original_description": "07/04/15 Statement of Capital;GBP 1",
+          "action_date": 1428364800000,
           "date": "2015-04-07"
         },
         {
-          "description": "model-articles-adopted",
           "category": "incorporation",
           "type": "MODEL ARTICLES",
+          "description": "model-articles-adopted",
           "date": "2015-04-07"
         }
-      ]
+      ],
+      "paper_filed": "True",
+      "transaction_id": "MzEyMDU5ODg0MGFkaXF6a2N4",
+      "date": "2015-04-07"
     }
-  ]
+  ],
+  "items_per_page": 25,
+  "filing_history_status": "filing-history-available",
+  "start_index": 0
 }
