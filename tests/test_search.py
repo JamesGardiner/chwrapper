@@ -91,6 +91,14 @@ def test_search_officers():
     assert sorted(res.json().keys()) == ["items", "items_per_page", "kind", "page_number", "start_index", "total_results"]
     assert sorted(res.json()["items"][0].keys()) == ["address", "appointment_count", "date_of_birth", "description", "description_identifiers", "kind", "links", "matches", "snippet", "title"]
 
+
+@responses.activate
+def test_filing_history():
+    "Searching for filing hisrory works"
+
+    with open("tests/filing_results.json") as results:
+        body = results.read()
+
 @responses.activate
 def test_registered_office():
     """Searching for a company"s registered address works"""
