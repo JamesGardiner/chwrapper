@@ -1,0 +1,13 @@
+{
+  "links": {
+    "self": "/company/05226269/filing-history/MDA4MzY4NDIzM2FkaXF6a2N4",
+    "document_metadata": "https://document-api.companieshouse.gov.uk/document/VlawMgWF1apT7hCdgFzC1nZ-o8x3-xiag2q7AubHIG8"
+  },
+  "transaction_id": "MDA4MzY4NDIzM2FkaXF6a2N4",
+  "description": "incorporation-company",
+  "date": "2004-09-09",
+  "paper_filed": true,
+  "category": "incorporation",
+  "type": "NEWINC",
+  "pages": 8
+}
