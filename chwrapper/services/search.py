@@ -129,10 +129,3 @@ class CompanyInfo(CompanySearch):
                                + '/officers',
                                params=params)
         return res
-
-if __name__ == '__main__':
-    s = CompanyInfo()
-    r = s.filing_history("05226269", transaction="MzAwMTAzNDc0OWFkaXF6a2N4")
-    print(r.json())
-
-

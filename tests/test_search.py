@@ -132,7 +132,7 @@ def test_filing_transaction():
 
     assert res.status_code == 200
     assert sorted(res.json().keys()) == ['category', 'date', 'description', 'links', 'pages', 'paper_filed', 'transaction_id', 'type']
-    assert sorted(res.json()["links" settings.keys()) == ['document_metadata', 'self']
+    assert sorted(res.json()["links"].keys()) == ['document_metadata', 'self']
 
 @responses.activate
 def test_registered_office():

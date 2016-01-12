@@ -36,7 +36,7 @@
           "date": "2015-04-07"
         }
       ],
-      "paper_filed": "True",
+      "paper_filed": true,
       "transaction_id": "MzEyMDU5ODg0MGFkaXF6a2N4",
       "date": "2015-04-07"
     }
