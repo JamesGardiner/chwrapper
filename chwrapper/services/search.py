@@ -25,7 +25,6 @@ from .base import Service
 
 """
 TODO:
-  - Company filing history
   - Company insovlency
   - Company charges
   - Officer appointments
@@ -77,13 +76,40 @@ class CompanyInfo(CompanySearch):
     def get_profile(self, num):
         res = self.session.get(self.baseuri + num)
         self.handle_http_error(res)
-
         return res
 
     def get_address(self, num):
-        res = self.session.get(self.baseuri + num + '/registered-office-address')
+        res = self.session.get(self.baseuri +
+                               num +
+                               '/registered-office-address')
         self.handle_http_error(res)
+        return res
 
+    def filing_history(self,
+                       num,
+                       transaction=None,
+                       category=None,
+                       company_number=None,
+                       items_per_page=None,
+                       start_index=None):
+
+        params = {
+            "category": category,
+            "items_per_page": items_per_page,
+            "start_index": start_index
+        }
+
+        if transaction is not None:
+            res = self.session.get(self.baseuri +
+                                   num +
+                                   '/filing-history/' +
+                                   transaction,
+                                   params=params)
+        else:
+            res = self.session.get(self.baseuri +
+                                   num +
+                                   '/filing-history',
+                                   params=params)
         return res
 
     def get_officers(self,
@@ -102,5 +128,4 @@ class CompanyInfo(CompanySearch):
                                + num
                                + '/officers',
                                params=params)
-
         return res
