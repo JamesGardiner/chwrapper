@@ -102,9 +102,8 @@ class CompanyInfo(CompanySearch):
         if transaction is not None:
             res = self.session.get(self.baseuri +
                                    num +
-                                   '/' +
-                                   transaction +
-                                   '/filing-history/',
+                                   '/filing-history/' +
+                                   transaction,
                                    params=params)
         else:
             res = self.session.get(self.baseuri +
@@ -130,3 +129,10 @@ class CompanyInfo(CompanySearch):
                                + '/officers',
                                params=params)
         return res
+
+if __name__ == '__main__':
+    s = CompanyInfo()
+    r = s.filing_history("05226269", transaction="MzAwMTAzNDc0OWFkaXF6a2N4")
+    print(r.json())
+
+
