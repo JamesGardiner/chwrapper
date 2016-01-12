@@ -25,7 +25,6 @@ from .base import Service
 
 """
 TODO:
-  - Company insovlency
   - Company charges
   - Officer appointments
 
@@ -82,6 +81,13 @@ class CompanyInfo(CompanySearch):
         res = self.session.get(self.baseuri +
                                num +
                                '/registered-office-address')
+        self.handle_http_error(res)
+        return res
+
+    def insolvency(self, num):
+        res = self.session.get(self.baseuri +
+                               num +
+                               '/insolvency')
         self.handle_http_error(res)
         return res
 
