@@ -135,6 +135,27 @@ def test_filing_transaction():
     assert sorted(res.json()["links"].keys()) == ['document_metadata', 'self']
 
 @responses.activate
+def test_insolvency():
+    "Searching for an insolvency works"
+
+    with open("tests/insolvency_results.json") as results:
+        body = results.read()
+
+    responses.add(
+        responses.GET,
+        "https://api.companieshouse.gov.uk/company/12345/insolvency?access_token=pk.test",
+        match_querystring=True,
+        status=200,
+        body=body,
+        content_type="application/json")
+
+    res = chwrapper.CompanyInfo(access_token="pk.test").insolvency("12345")
+
+    assert res.status_code == 200
+    assert sorted(res.json().keys()) == ['cases', 'etag']
+    assert sorted(res.json()["cases"][0].keys()) == ['dates', 'number', 'practitioners', 'type']
+
+@responses.activate
 def test_registered_office():
     """Searching for a company"s registered address works"""
 

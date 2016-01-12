@@ -1,0 +1,24 @@
+{
+  "etag": "baaa631bfe66949c7f362dba9411694e74b28b0f",
+  "cases": [
+    {
+      "dates": [
+        {
+          "date": "1997-02-21",
+          "type": "petitioned-on"
+        },
+        {
+          "type": "wound-up-on",
+          "date": "1997-04-21"
+        },
+        {
+          "type": "concluded-winding-up-on",
+          "date": "1998-09-09"
+        }
+      ],
+      "number": "1",
+      "practitioners": [],
+      "type": "compulsory-liquidation"
+    }
+  ]
+}
