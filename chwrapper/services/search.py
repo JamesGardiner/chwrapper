@@ -73,6 +73,7 @@ class CompanyInfo(CompanySearch):
     def __init__(self, access_token=None):
         super(CompanyInfo, self).__init__(access_token)
         self.baseuri = self._BASE_URI + 'company/'
+        self.params = None
 
     def get_profile(self, num):
         res = self.session.get(self.baseuri + num)
@@ -97,47 +98,40 @@ class CompanyInfo(CompanySearch):
                        num,
                        transaction=None,
                        category=None,
-                       company_number=None,
-                       items_per_page=None,
-                       start_index=None):
+                       **kwargs):
 
-        params = {
-            "category": category,
-            "items_per_page": items_per_page,
-            "start_index": start_index
-        }
+        if kwargs is not None:
+            self.params = kwargs
 
         if transaction is not None:
             res = self.session.get(self.baseuri +
                                    num +
                                    '/filing-history/' +
                                    transaction,
-                                   params=params)
+                                   params=self.params)
         else:
             res = self.session.get(self.baseuri +
                                    num +
                                    '/filing-history',
-                                   params=params)
+                                   params=self.params)
         return res
 
     def charges(self, num, charge_id=None, **kwargs):
 
-        if kwargs is None:
-            params = {}
-        else:
-            params = kwargs
+        if kwargs is not None:
+            self.params = kwargs
 
         if charge_id is not None:
             res = self.session.get(self.baseuri +
                                    num +
                                    '/charges/' +
                                    charge_id,
-                                   params=params)
+                                   params=self.params)
         else:
             res = self.session.get(self.baseuri +
                                    num +
                                    '/charges',
-                                   params=params)
+                                   params=self.params)
         return res
 
     def get_officers(self,
