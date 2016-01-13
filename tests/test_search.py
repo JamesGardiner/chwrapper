@@ -238,6 +238,18 @@ def test_insolvency():
 def test_charges():
     "Searching for a charge works"
 
+    keys = ['charge_number',
+            'classification',
+            'created_on',
+            'delivered_on',
+            'etag',
+            'links',
+            'particulars',
+            'persons_entitled',
+            'secured_details',
+            'status',
+            'transactions']
+
     with open("tests/charges_results.json") as results:
         body = results.read()
 
@@ -258,17 +270,29 @@ def test_charges():
         'part_satisfied_count',
         'satisfied_count', 'total_count',
         'unfiltered_count']
-    assert sorted(res.json()["items"][0].keys()) == ['charge_number',
-                                                     'classification',
-                                                     'created_on',
-                                                     'delivered_on',
-                                                     'etag',
-                                                     'links',
-                                                     'particulars',
-                                                     'persons_entitled',
-                                                     'secured_details',
-                                                     'status',
-                                                     'transactions']
+    assert sorted(res.json()["items"][0].keys()) == keys
+
+    responses.add(
+        responses.GET,
+        "https://api.companieshouse.gov.uk/company/" +
+        "12345/charges/6789jhefD?access_token=pk.test",
+        match_querystring=True,
+        status=200,
+        body=body,
+        content_type="application/json")
+
+    res_charge = chwrapper.CompanyInfo(
+        access_token="pk.test").charges("12345", charge_id="6789jhefD")
+
+    assert res_charge.status_code == 200
+    assert sorted(res_charge.json().keys()) == [
+        'items',
+        'part_satisfied_count',
+        'satisfied_count', 'total_count',
+        'unfiltered_count']
+    assert sorted(res_charge.json()["items"][0].keys()) == keys
+
+    assert
 
 
 @responses.activate
