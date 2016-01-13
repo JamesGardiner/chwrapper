@@ -292,8 +292,6 @@ def test_charges():
         'unfiltered_count']
     assert sorted(res_charge.json()["items"][0].keys()) == keys
 
-    assert
-
 
 @responses.activate
 def test_registered_office():
