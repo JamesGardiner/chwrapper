@@ -258,7 +258,7 @@ def test_charges():
         'part_satisfied_count',
         'satisfied_count', 'total_count',
         'unfiltered_count']
-    assert sorted(res.json()["cases"][0].keys()) == ['charge_number',
+    assert sorted(res.json()["items"][0].keys()) == ['charge_number',
                                                      'classification',
                                                      'created_on',
                                                      'delivered_on',
