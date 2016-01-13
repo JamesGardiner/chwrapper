@@ -1,0 +1,44 @@
+{
+  "part_satisfied_count": 0,
+  "total_count": 1,
+  "unfiltered_count": 1,
+  "items": [
+    {
+      "delivered_on": "1992-07-09",
+      "etag": "e55532fbaf44b52b826e0c1e00a22a055892c3dd",
+      "classification": {
+        "type": "charge-description",
+        "description": "Debenture"
+      },
+      "status": "outstanding",
+      "persons_entitled": [
+        {
+          "name": "Barclays Bank PLC"
+        }
+      ],
+      "charge_number": 1,
+      "created_on": "1992-07-02",
+      "links": {
+        "self": "/company/02497589/charges/b_1EtLQ1B7opPgPL6elIS6p67fI"
+      },
+      "transactions": [
+        {
+          "links": {
+            "filing": "/company/02497589/filing-history/MDExOTUxOTQ4NWFkaXF6a2N4"
+          },
+          "filing_type": "create-charge-pre-2006-companies-act",
+          "delivered_on": "1992-07-09"
+        }
+      ],
+      "secured_details": {
+        "type": "amount-secured",
+        "description": "All monies due or to become due from the company to the chargee on any account whatsoever"
+      },
+      "particulars": {
+        "type": "short-particulars",
+        "description": "(See form 395 for full details). Fixed and floating charges over the undertaking and all property and assets present and future including goodwill bookdebts uncalled capital buildings fixtures fixed plant and machinery."
+      }
+    }
+  ],
+  "satisfied_count": 0
+}
