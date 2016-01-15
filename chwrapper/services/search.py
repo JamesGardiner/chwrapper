@@ -24,31 +24,30 @@
 from .base import Service
 
 
+def merge_dicts(*dict_args):
+    '''
+    Given any number of dicts, shallow copy and merge into a new dict,
+    precedence goes to key value pairs in latter dicts.
+    '''
+    result = {}
+    for dictionary in dict_args:
+        result.update(dictionary)
+    return result
+
+
 class CompanySearch(Service):
     """Search for companies by name.
     """
-
     def __init__(self, access_token=None):
         super(CompanySearch, self).__init__()
         self.session = self.get_session(access_token)
         self.baseuri = self._BASE_URI + 'search/companies'
 
-    def search(self,
-               term,
-               items_per_page=None,
-               start_index=None):
-
-        params = {
-            "q": term,
-            "items_per_page": items_per_page,
-            "start_index": start_index
-        }
-
-        res = self.session.get(self.baseuri,
-                               params=params)
-
+    def search(self, term, **kwargs):
+        params = []
+        params = {'q': term}
+        res = self.session.get(self.baseuri, params=params)
         self.handle_http_error(res)
-
         return res
 
 
@@ -102,55 +101,40 @@ class CompanyInfo(CompanySearch):
                        category=None,
                        **kwargs):
 
-        if kwargs is not None:
-            self.params = kwargs
-        else:
-            self.params = None
-
         if transaction is not None:
             res = self.session.get(self.baseuri +
                                    num +
                                    '/filing-history/' +
                                    transaction,
-                                   params=self.params)
+                                   params=kwargs)
         else:
             res = self.session.get(self.baseuri +
                                    num +
                                    '/filing-history',
-                                   params=self.params)
+                                   params=kwargs)
         return res
 
     def charges(self, num, charge_id=None, **kwargs):
-
-        if kwargs is not None:
-            self.params = kwargs
-        else:
-            self.params = None
 
         if charge_id is not None:
             res = self.session.get(self.baseuri +
                                    num +
                                    '/charges/' +
                                    charge_id,
-                                   params=self.params)
+                                   params=kwargs)
         else:
             res = self.session.get(self.baseuri +
                                    num +
                                    '/charges',
-                                   params=self.params)
+                                   params=kwargs)
         return res
 
     def officers(self,
                  num,
                  **kwargs):
 
-        if kwargs is not None:
-            self.params = kwargs
-        else:
-            self.params = None
-
         res = self.session.get(self.baseuri +
                                num +
                                '/officers',
-                               params=self.params)
+                               params=kwargs)
         return res
