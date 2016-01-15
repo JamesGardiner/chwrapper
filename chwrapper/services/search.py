@@ -23,12 +23,6 @@
 
 from .base import Service
 
-"""
-TODO:
-  - Officer appointments
-
-"""
-
 
 class CompanySearch(Service):
     """Search for companies by name.
@@ -66,6 +60,14 @@ class OfficerSearch(CompanySearch):
         self.session = self.get_session(access_token)
         self.baseuri = self._BASE_URI + 'search/officers'
 
+    def appointments(self, num, **kwargs):
+        res = self.session.get(self._BASE_URI +
+                               'officers/' +
+                               num +
+                               '/appointments')
+
+        self.handle_http_error(res)
+        return res
 
 class CompanyInfo(CompanySearch):
     """Search for company information by company number."""
@@ -75,15 +77,15 @@ class CompanyInfo(CompanySearch):
         self.baseuri = self._BASE_URI + 'company/'
         self.params = None
 
-    def get_profile(self, num):
-        res = self.session.get(self.baseuri + num)
-        self.handle_http_error(res)
-        return res
-
-    def get_address(self, num):
+    def address(self, num):
         res = self.session.get(self.baseuri +
                                num +
                                '/registered-office-address')
+        self.handle_http_error(res)
+        return res
+
+    def profile(self, num):
+        res = self.session.get(self.baseuri + num)
         self.handle_http_error(res)
         return res
 
@@ -102,6 +104,8 @@ class CompanyInfo(CompanySearch):
 
         if kwargs is not None:
             self.params = kwargs
+        else:
+            self.params = None
 
         if transaction is not None:
             res = self.session.get(self.baseuri +
@@ -120,6 +124,8 @@ class CompanyInfo(CompanySearch):
 
         if kwargs is not None:
             self.params = kwargs
+        else:
+            self.params = None
 
         if charge_id is not None:
             res = self.session.get(self.baseuri +
@@ -134,20 +140,17 @@ class CompanyInfo(CompanySearch):
                                    params=self.params)
         return res
 
-    def get_officers(self,
-                     num,
-                     items_per_page=None,
-                     start_index=None,
-                     order_by=None):
+    def officers(self,
+                 num,
+                 **kwargs):
 
-        params = {
-            "items_per_page": items_per_page,
-            "start_index": start_index,
-            "order_by": order_by
-        }
+        if kwargs is not None:
+            self.params = kwargs
+        else:
+            self.params = None
 
         res = self.session.get(self.baseuri +
                                num +
                                '/officers',
-                               params=params)
+                               params=self.params)
         return res
