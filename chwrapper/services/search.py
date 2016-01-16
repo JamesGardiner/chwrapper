@@ -24,106 +24,72 @@
 from .base import Service
 
 
-class CompanySearch(Service):
+class Search(Service):
     """Search for companies by name.
     """
-    def __init__(self, access_token=None):
-        super(CompanySearch, self).__init__()
-        self.session = self.get_session(access_token)
-        self.baseuri = self._BASE_URI + 'search/companies'
 
-    def search(self, term, **kwargs):
-        params = []
-        params = {'q': term}
-        res = self.session.get(self.baseuri, params=params)
+    def __init__(self, access_token=None):
+        super(Search, self).__init__()
+        self.session = self.get_session(access_token)
+
+    def search_companies(self, term, **kwargs):
+        params = kwargs
+        params['q'] = term
+        baseuri = self._BASE_URI + 'search/companies'
+        res = self.session.get(baseuri, params=params)
         self.handle_http_error(res)
         return res
 
-
-class OfficerSearch(CompanySearch):
-    """Search for officers registered with companies house."""
-
-    def __init__(self, access_token=None):
-        super(OfficerSearch, self).__init__()
-        self.session = self.get_session(access_token)
-        self.baseuri = self._BASE_URI + 'search/officers'
+    def search_officers(self, term, **kwargs):
+        params = kwargs
+        params['q'] = term
+        baseuri = self._BASE_URI + 'search/officers'
+        res = self.session.get(baseuri, params=params)
+        return res
 
     def appointments(self, num, **kwargs):
-        res = self.session.get(self._BASE_URI +
-                               'officers/' +
-                               num +
-                               '/appointments')
-
+        baseuri = self._BASE_URI + 'officers/{}/appointments'.format(num)
+        res = self.session.get(baseuri, params=kwargs)
         self.handle_http_error(res)
         return res
 
-class CompanyInfo(CompanySearch):
-    """Search for company information by company number."""
-
-    def __init__(self, access_token=None):
-        super(CompanyInfo, self).__init__(access_token)
-        self.baseuri = self._BASE_URI + 'company/'
-        self.params = None
-
     def address(self, num):
-        res = self.session.get(self.baseuri +
-                               num +
-                               '/registered-office-address')
+        baseuri = self._BASE_URI + "company/{}/registered-office-address".format(num)
+        res = self.session.get(baseuri)
         self.handle_http_error(res)
         return res
 
     def profile(self, num):
-        res = self.session.get(self.baseuri + num)
+        baseuri = self._BASE_URI + "company/{}".format(num)
+        res = self.session.get(baseuri)
         self.handle_http_error(res)
         return res
 
     def insolvency(self, num):
-        res = self.session.get(self.baseuri +
-                               num +
-                               '/insolvency')
+        baseuri = self._BASE_URI + "company/{}/insolvency".format(num)
+        res = self.session.get(baseuri)
         self.handle_http_error(res)
         return res
 
-    def filing_history(self,
-                       num,
-                       transaction=None,
-                       category=None,
-                       **kwargs):
-
+    def filing_history(self, num, transaction=None, **kwargs):
+        baseuri = self._BASE_URI + "company/{}/filing-history".format(num)
         if transaction is not None:
-            res = self.session.get(self.baseuri +
-                                   num +
-                                   '/filing-history/' +
-                                   transaction,
-                                   params=kwargs)
-        else:
-            res = self.session.get(self.baseuri +
-                                   num +
-                                   '/filing-history',
-                                   params=kwargs)
+            baseuri += "/{}".format(transaction)
+        res = self.session.get(baseuri, params=kwargs)
+        self.handle_http_error(res)
         return res
 
     def charges(self, num, charge_id=None, **kwargs):
-
+        baseuri = self._BASE_URI + "company/{}/charges".format(num)
         if charge_id is not None:
-            res = self.session.get(self.baseuri +
-                                   num +
-                                   '/charges/' +
-                                   charge_id,
-                                   params=kwargs)
+            baseuri += "/{}".format(charge_id)
+            res = self.session.get(baseuri, params=kwargs)
         else:
-            res = self.session.get(self.baseuri +
-                                   num +
-                                   '/charges',
-                                   params=kwargs)
+            res = self.session.get(baseuri, params=kwargs)
         return res
 
-    def officers(self,
-                 num,
-                 **kwargs):
-
-        res = self.session.get(self.baseuri +
-                               num +
-                               '/officers',
-                               params=kwargs)
+    def officers(self, num, **kwargs):
+        baseuri = self._BASE_URI + "company/{}/officers".format(num)
+        res = self.session.get(baseuri, params=kwargs)
+        self.handle_http_error(res)
         return res
