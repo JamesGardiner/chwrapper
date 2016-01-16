@@ -18,7 +18,7 @@ def test_company_search():
         body=body,
         content_type="application/json")
 
-    res = chwrapper.CompanySearch(access_token="pk.test").search("Python")
+    res = chwrapper.Search(access_token="pk.test").search_companies("Python")
 
     assert res.status_code == 200
     assert sorted(res.json().keys()) == ["items",
@@ -58,7 +58,7 @@ def test_officer_appointments():
         body=body,
         content_type="application/json")
 
-    res = chwrapper.OfficerSearch(
+    res = chwrapper.Search(
         access_token="pk.test"
     ).appointments("12345")
 
@@ -83,7 +83,7 @@ def test_officer_search():
         body=body,
         content_type="application/json")
 
-    res = chwrapper.OfficerSearch(access_token="pk.test").search("John")
+    res = chwrapper.Search(access_token="pk.test").search_officers("John")
 
     assert res.status_code == 200
     assert sorted(res.json().keys()) == ["items",
@@ -120,7 +120,7 @@ def test_company_profile():
         body=body,
         content_type="application/json")
 
-    res = chwrapper.CompanyInfo(access_token="pk.test").profile('12345')
+    res = chwrapper.Search(access_token="pk.test").profile('12345')
 
     assert res.status_code == 200
     assert sorted(res.json()["accounts"]) == [
@@ -143,7 +143,7 @@ def test_search_officers():
         body=body,
         content_type="application/json")
 
-    res = chwrapper.CompanyInfo(access_token="pk.test").officers("12345")
+    res = chwrapper.Search(access_token="pk.test").officers("12345")
 
     assert res.status_code == 200
     assert sorted(res.json().keys()) == ["items",
@@ -181,7 +181,7 @@ def test_filing_history():
         body=body,
         content_type="application/json")
 
-    res = chwrapper.CompanyInfo(access_token="pk.test").filing_history("12345")
+    res = chwrapper.Search(access_token="pk.test").filing_history("12345")
 
     assert res.status_code == 200
     assert sorted(res.json().keys()) == ['filing_history_status',
@@ -218,7 +218,7 @@ def test_filing_transaction():
         body=body,
         content_type="application/json")
 
-    res = chwrapper.CompanyInfo(access_token="pk.test").filing_history(
+    res = chwrapper.Search(access_token="pk.test").filing_history(
         "12345", transaction="6789jhefD")
 
     assert res.status_code == 200
@@ -251,7 +251,7 @@ def test_insolvency():
         body=body,
         content_type="application/json")
 
-    res = chwrapper.CompanyInfo(access_token="pk.test").insolvency("12345")
+    res = chwrapper.Search(access_token="pk.test").insolvency("12345")
 
     assert res.status_code == 200
     assert sorted(res.json().keys()) == ['cases', 'etag']
@@ -287,7 +287,7 @@ def test_charges():
         body=body,
         content_type="application/json")
 
-    res = chwrapper.CompanyInfo(access_token="pk.test").charges("12345")
+    res = chwrapper.Search(access_token="pk.test").charges("12345")
 
     assert res.status_code == 200
     assert sorted(res.json().keys()) == [
@@ -306,7 +306,7 @@ def test_charges():
         body=body,
         content_type="application/json")
 
-    res_charge = chwrapper.CompanyInfo(
+    res_charge = chwrapper.Search(
         access_token="pk.test").charges("12345", charge_id="6789jhefD")
 
     assert res_charge.status_code == 200
@@ -337,7 +337,7 @@ def test_registered_office():
         body=body,
         content_type="application/json")
 
-    res = chwrapper.CompanyInfo(access_token="pk.test").address("12345")
+    res = chwrapper.Search(access_token="pk.test").address("12345")
     assert res.status_code == 200
 
     for key in sorted(res.json().keys()):
