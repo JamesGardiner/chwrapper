@@ -6,7 +6,7 @@ import chwrapper
 def test_company_search():
     "Searching by company name works"
 
-    with open("chwrapper/tests/results.json") as results:
+    with open("tests/results.json") as results:
         body = results.read()
 
     responses.add(
@@ -46,7 +46,7 @@ def test_company_search():
 def test_officer_appointments():
     "Searching for appointments by officer ID works."
 
-    with open("chwrapper/tests/appointment_results.json") as results:
+    with open("tests/appointment_results.json") as results:
         body = results.read()
 
     responses.add(
@@ -71,7 +71,7 @@ def test_officer_appointments():
 def test_officer_search():
     """Searching by officer name works."""
 
-    with open("chwrapper/tests/officer_results.json") as results:
+    with open("tests/officer_results.json") as results:
         body = results.read()
 
     responses.add(
@@ -109,7 +109,7 @@ def test_officer_search():
 def test_company_profile():
     "Getting a company profile works"
 
-    with open("chwrapper/tests/profile_results.json") as results:
+    with open("tests/profile_results.json") as results:
         body = results.read()
 
     responses.add(
@@ -131,7 +131,7 @@ def test_company_profile():
 def test_search_officers():
     "Searching for officers by company number works"
 
-    with open("chwrapper/tests/officer_results.json") as results:
+    with open("tests/officer_results.json") as results:
         body = results.read()
 
     responses.add(
@@ -169,7 +169,7 @@ def test_search_officers():
 def test_filing_history():
     "Searching for filing history works"
 
-    with open("chwrapper/tests/filing_results.json") as results:
+    with open("tests/filing_results.json") as results:
         body = results.read()
 
     responses.add(
@@ -206,7 +206,7 @@ def test_filing_history():
 def test_filing_transaction():
     "Searching for a specific filing transaction works"
 
-    with open("chwrapper/tests/transaction_results.json") as results:
+    with open("tests/transaction_results.json") as results:
         body = results.read()
 
     responses.add(
@@ -239,7 +239,7 @@ def test_filing_transaction():
 def test_insolvency():
     "Searching for an insolvency works"
 
-    with open("chwrapper/tests/insolvency_results.json") as results:
+    with open("tests/insolvency_results.json") as results:
         body = results.read()
 
     responses.add(
@@ -275,7 +275,7 @@ def test_charges():
             'status',
             'transactions']
 
-    with open("chwrapper/tests/charges_results.json") as results:
+    with open("tests/charges_results.json") as results:
         body = results.read()
 
     responses.add(
@@ -325,7 +325,7 @@ def test_registered_office():
     results_keys = ["address_line_1", "address_line_2",
                     "locality", "postal_code", "region"]
 
-    with open("chwrapper/tests/registered_address_results.json") as results:
+    with open("tests/registered_address_results.json") as results:
         body = results.read()
 
     responses.add(
