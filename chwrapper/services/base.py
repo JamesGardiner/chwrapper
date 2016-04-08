@@ -27,7 +27,7 @@ import requests
 from .. import __version__
 
 
-class _Service(object):
+class Service(object):
 
     def __init__(self):
         self._BASE_URI = "https://api.companieshouse.gov.uk/"
