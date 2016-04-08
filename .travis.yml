@@ -9,5 +9,10 @@ install:
   - "pip install coveralls"
 script:
   - py.test tests/ --cov chwrapper --cov-report term-missing
+# whitelist
+branches:
+  only:
+    - master
+    - develop
 after_success:
 - coveralls
