@@ -342,3 +342,75 @@ def test_registered_office():
 
     for key in sorted(res.json().keys()):
         assert key in results_keys
+
+
+@responses.activate
+def test_disqualified():
+    """Get disqualified officers"""
+
+    with open("tests/results.json") as results:
+        body = results.read()
+
+    responses.add(
+        responses.GET,
+        "https://api.companieshouse.gov.uk/disqualified-officers/natural/" +
+        "1234?access_token=pk.test",
+        match_querystring=True,
+        status=200,
+        body=body,
+        content_type="application/json")
+
+    res = chwrapper.Search(access_token="pk.test").disqualified("1234")
+
+    assert res.status_code == 200
+    assert sorted(res.json().keys()) == ["items",
+                                         "items_per_page",
+                                         "kind", "page_number",
+                                         "start_index",
+                                         "total_results"]
+
+    assert sorted(res.json()["items"][0].keys()) == ["address",
+                                                     "company_number",
+                                                     "company_status",
+                                                     "company_type",
+                                                     "date_of_cessation",
+                                                     "date_of_creation",
+                                                     "description",
+                                                     "description_identifier",
+                                                     "kind",
+                                                     "links",
+                                                     "matches",
+                                                     "snippet",
+                                                     "title"]
+
+    responses.add(
+        responses.GET,
+        "https://api.companieshouse.gov.uk/disqualified-officers/corporate/" +
+        "1234?access_token=pk.test",
+        match_querystring=True,
+        status=200,
+        body=body,
+        content_type="application/json")
+
+    res = chwrapper.Search(access_token="pk.test").disqualified("1234")
+
+    assert res.status_code == 200
+    assert sorted(res.json().keys()) == ["items",
+                                         "items_per_page",
+                                         "kind", "page_number",
+                                         "start_index",
+                                         "total_results"]
+
+    assert sorted(res.json()["items"][0].keys()) == ["address",
+                                                     "company_number",
+                                                     "company_status",
+                                                     "company_type",
+                                                     "date_of_cessation",
+                                                     "date_of_creation",
+                                                     "description",
+                                                     "description_identifier",
+                                                     "kind",
+                                                     "links",
+                                                     "matches",
+                                                     "snippet",
+                                                     "title"]
