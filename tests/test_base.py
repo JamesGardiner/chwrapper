@@ -45,6 +45,7 @@ def test_user_agent():
     assert session.headers['User-Agent'].startswith('chwrapper')
     assert 'python-requests' in session.headers['User-Agent']
 
+
 @responses.activate
 def test_custom_messages():
     """Check status code error messaging"""
@@ -52,7 +53,6 @@ def test_custom_messages():
     responses.add(responses.GET, fakeurl, status=401)
     Service = chwrapper.Service()
     response = Service.get_session().get(fakeurl)
-
 
     with pytest.raises(requests.exceptions.HTTPError) as exc:
         assert Service.handle_http_error(response,
