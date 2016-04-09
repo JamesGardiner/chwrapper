@@ -54,7 +54,7 @@ class Service(object):
         return 'chwrapper/{0}'.format(__version__)
 
     def handle_http_error(self, response, custom_messages=None,
-                          raise_for_status=False):
+                          raise_for_status=True):
         if not custom_messages:
             custom_messages = {}
         if response.status_code in custom_messages.keys():
