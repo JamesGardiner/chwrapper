@@ -61,17 +61,20 @@ class Search(Service):
         self.handle_http_error(res)
         return res
 
-    def search_officers(self, term, **kwargs):
+    def search_officers(self, term, disqualified=False, **kwargs):
         """Search for officers by name.
 
         Args:
           term (str): Officer name to search on.
+          disqualified (Optional[bool]): True to search for disqualified
+            officers
           kwargs (dict): additional keywords passed into
             requests.session.get params keyword.
         """
+        search_type = 'officers' if not disqualified else 'disqualified-officers'
         params = kwargs
         params['q'] = term
-        baseuri = self._BASE_URI + 'search/officers'
+        baseuri = self._BASE_URI + 'search/{}'.format(search_type)
         res = self.session.get(baseuri, params=params)
         return res
 
