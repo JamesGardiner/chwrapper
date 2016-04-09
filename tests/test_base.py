@@ -53,7 +53,6 @@ def test_custom_messages():
     Service = chwrapper.Service()
     response = Service.get_session().get(fakeurl)
 
-    assert Service.handle_http_error(response) is None
 
     with pytest.raises(requests.exceptions.HTTPError) as exc:
         assert Service.handle_http_error(response,
