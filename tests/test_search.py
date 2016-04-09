@@ -106,6 +106,45 @@ def test_officer_search():
 
 
 @responses.activate
+def test_disqualified_officer_search():
+    """Searching for disqualified officer by name works."""
+
+    with open("tests/officer_results.json") as results:
+        body = results.read()
+
+    responses.add(
+        responses.GET,
+        "https://api.companieshouse.gov.uk/search/disqualified-officers?" +
+        "access_token=pk.test&q=John",
+        match_querystring=True,
+        status=200,
+        body=body,
+        content_type="application/json")
+
+    s = chwrapper.Search(access_token="pk.test")
+    res = s.search_officers("John", disqualified=True)
+
+    assert res.status_code == 200
+    assert sorted(res.json().keys()) == ["items",
+                                         "items_per_page",
+                                         "kind",
+                                         "page_number",
+                                         "start_index",
+                                         "total_results"]
+
+    assert sorted(res.json()["items"][0].keys()) == ["address",
+                                                     "appointment_count",
+                                                     "date_of_birth",
+                                                     "description",
+                                                     "description_identifiers",
+                                                     "kind",
+                                                     "links",
+                                                     "matches",
+                                                     "snippet",
+                                                     "title"]
+
+
+@responses.activate
 def test_company_profile():
     "Getting a company profile works"
 
@@ -345,8 +384,8 @@ def test_registered_office():
 
 
 @responses.activate
-def test_disqualified():
-    """Get disqualified officers"""
+def test_disqualified_natural():
+    """Get disqualified natural officers"""
 
     with open("tests/results.json") as results:
         body = results.read()
@@ -383,6 +422,14 @@ def test_disqualified():
                                                      "snippet",
                                                      "title"]
 
+
+@responses.activate
+def test_disqualified_corporate():
+    """Get disqualified corporate officers"""
+
+    with open("tests/results.json") as results:
+        body = results.read()
+
     responses.add(
         responses.GET,
         "https://api.companieshouse.gov.uk/disqualified-officers/corporate/" +
@@ -392,7 +439,8 @@ def test_disqualified():
         body=body,
         content_type="application/json")
 
-    res = chwrapper.Search(access_token="pk.test").disqualified("1234")
+    res = chwrapper.Search(access_token="pk.test").disqualified("1234",
+                                                                natural=False)
 
     assert res.status_code == 200
     assert sorted(res.json().keys()) == ["items",
