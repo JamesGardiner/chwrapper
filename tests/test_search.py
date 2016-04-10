@@ -16,7 +16,8 @@ def test_company_search():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     res = chwrapper.Search(access_token="pk.test").search_companies("Python")
 
@@ -56,7 +57,8 @@ def test_officer_appointments():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     res = chwrapper.Search(
         access_token="pk.test"
@@ -81,7 +83,8 @@ def test_officer_search():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     res = chwrapper.Search(access_token="pk.test").search_officers("John")
 
@@ -119,7 +122,8 @@ def test_disqualified_officer_search():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     s = chwrapper.Search(access_token="pk.test")
     res = s.search_officers("John", disqualified=True)
@@ -157,7 +161,8 @@ def test_company_profile():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     res = chwrapper.Search(access_token="pk.test").profile('12345')
 
@@ -180,7 +185,8 @@ def test_search_officers():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     res = chwrapper.Search(access_token="pk.test").officers("12345")
 
@@ -218,7 +224,8 @@ def test_filing_history():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     res = chwrapper.Search(access_token="pk.test").filing_history("12345")
 
@@ -255,7 +262,8 @@ def test_filing_transaction():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     res = chwrapper.Search(access_token="pk.test").filing_history(
         "12345", transaction="6789jhefD")
@@ -288,7 +296,8 @@ def test_insolvency():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     res = chwrapper.Search(access_token="pk.test").insolvency("12345")
 
@@ -324,7 +333,8 @@ def test_charges():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     res = chwrapper.Search(access_token="pk.test").charges("12345")
 
@@ -343,7 +353,8 @@ def test_charges():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     res_charge = chwrapper.Search(
         access_token="pk.test").charges("12345", charge_id="6789jhefD")
@@ -374,7 +385,8 @@ def test_registered_office():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     res = chwrapper.Search(access_token="pk.test").address("12345")
     assert res.status_code == 200
@@ -397,7 +409,8 @@ def test_disqualified_natural():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     res = chwrapper.Search(access_token="pk.test").disqualified("1234")
 
@@ -437,7 +450,8 @@ def test_disqualified_corporate():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     res = chwrapper.Search(access_token="pk.test").disqualified("1234",
                                                                 natural=False)
