@@ -50,7 +50,11 @@ def test_user_agent():
 def test_custom_messages():
     """Check status code error messaging"""
     fakeurl = 'https://example.com'
-    responses.add(responses.GET, fakeurl, status=401)
+    responses.add(responses.GET,
+                  fakeurl,
+                  status=401,
+                  adding_headers={'X-Ratelimit-Reset': '1460280499'})
+
     Service = chwrapper.Service()
     response = Service.get_session().get(fakeurl)
 
