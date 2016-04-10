@@ -76,6 +76,7 @@ class Search(Service):
         params['q'] = term
         baseuri = self._BASE_URI + 'search/{}'.format(search_type)
         res = self.session.get(baseuri, params=params)
+        self.handle_http_error(res)
         return res
 
     def appointments(self, num, **kwargs):
@@ -156,6 +157,7 @@ class Search(Service):
             res = self.session.get(baseuri, params=kwargs)
         else:
             res = self.session.get(baseuri, params=kwargs)
+        self.handle_http_error(res)
         return res
 
     def officers(self, num, **kwargs):
