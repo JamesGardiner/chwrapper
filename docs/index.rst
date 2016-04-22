@@ -33,7 +33,7 @@ User Guide
 Contributor Guide
 -----------------
 
-I'd welcome contributions from the community. Here's how:
+I'd welcome contributions from the community. See CONTRIBUTING.md for more info.:
 
 .. toctree::
    :maxdepth: 2
