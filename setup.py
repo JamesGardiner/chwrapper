@@ -6,7 +6,7 @@ def readme():
         return f.read()
 
 setup(name='chwrapper',
-      version='0.1.1',
+      version='0.2.0',
       description='A simple wrapper around the Companies House API',
       long_description=readme(),
       url='http://github.com/jamesgardiner/chwrapper',
