@@ -39,7 +39,7 @@ git checkout -b feature-name-of-feature develop
 
 6. Install the required libraries:
 ```
-pip install -r dev-requirements.txt
+pip install -r requirements.txt
 ```
 
 7. Confirm that all the tests pass before you make any changes:
