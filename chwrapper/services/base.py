@@ -21,13 +21,14 @@
 # SOFTWARE.
 
 
+from datetime import datetime
 import os
 import requests
 
 from .. import __version__
 
 
-class _Service(object):
+class Service(object):
 
     def __init__(self):
         self._BASE_URI = "https://api.companieshouse.gov.uk/"
@@ -54,11 +55,20 @@ class _Service(object):
         return 'chwrapper/{0}'.format(__version__)
 
     def handle_http_error(self, response, custom_messages=None,
-                          raise_for_status=False):
+                          raise_for_status=True):
+        cust_str = ('429 Too many requests made | Rate limit will reset at'
+                    ' {}')
+
         if not custom_messages:
-            custom_messages = {}
+            custom_messages = {
+                429: cust_str.format(
+                    datetime.utcfromtimestamp(
+                        float(response.headers['X-Ratelimit-Reset']))
+                )
+            }
+
         if response.status_code in custom_messages.keys():
             raise requests.exceptions.HTTPError(
                 custom_messages[response.status_code])
-        if raise_for_status:
+        elif raise_for_status:
             response.raise_for_status()

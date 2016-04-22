@@ -29,10 +29,10 @@ This module provides a Search object to query the Companies House API.
 
 """
 
-from .base import _Service
+from .base import Service
 
 
-class Search(_Service):
+class Search(Service):
     """Provides an interface to the Companies House API through a Search object."""
 
     def __init__(self, access_token=None):
@@ -61,18 +61,22 @@ class Search(_Service):
         self.handle_http_error(res)
         return res
 
-    def search_officers(self, term, **kwargs):
+    def search_officers(self, term, disqualified=False, **kwargs):
         """Search for officers by name.
 
         Args:
           term (str): Officer name to search on.
+          disqualified (Optional[bool]): True to search for disqualified
+            officers
           kwargs (dict): additional keywords passed into
             requests.session.get params keyword.
         """
+        search_type = 'officers' if not disqualified else 'disqualified-officers'
         params = kwargs
         params['q'] = term
-        baseuri = self._BASE_URI + 'search/officers'
+        baseuri = self._BASE_URI + 'search/{}'.format(search_type)
         res = self.session.get(baseuri, params=params)
+        self.handle_http_error(res)
         return res
 
     def appointments(self, num, **kwargs):
@@ -153,6 +157,7 @@ class Search(_Service):
             res = self.session.get(baseuri, params=kwargs)
         else:
             res = self.session.get(baseuri, params=kwargs)
+        self.handle_http_error(res)
         return res
 
     def officers(self, num, **kwargs):
@@ -164,6 +169,24 @@ class Search(_Service):
             requests.session.get *params* keyword.
         """
         baseuri = self._BASE_URI + "company/{}/officers".format(num)
+        res = self.session.get(baseuri, params=kwargs)
+        self.handle_http_error(res)
+        return res
+
+    def disqualified(self, num, natural=True, **kwargs):
+        """Search for disqualified officers by officer ID. Searches for
+           natural disqualifications by default. Specify natural=False to
+           search for corporate disqualifications.
+
+        Args:
+           num (str): Company number to search on.
+           natural (Optional[bool]): Natural or corporate search
+           kwargs (dict): additional keywords passed into
+            requests.session.get *params* keyword.
+        """
+        search_type = 'natural' if natural else 'corporate'
+        baseuri = (self._BASE_URI +
+                   'disqualified-officers/{}/{}'.format(search_type, num))
         res = self.session.get(baseuri, params=kwargs)
         self.handle_http_error(res)
         return res

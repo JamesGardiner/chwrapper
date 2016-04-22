@@ -16,7 +16,8 @@ def test_company_search():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     res = chwrapper.Search(access_token="pk.test").search_companies("Python")
 
@@ -56,7 +57,8 @@ def test_officer_appointments():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     res = chwrapper.Search(
         access_token="pk.test"
@@ -81,9 +83,50 @@ def test_officer_search():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     res = chwrapper.Search(access_token="pk.test").search_officers("John")
+
+    assert res.status_code == 200
+    assert sorted(res.json().keys()) == ["items",
+                                         "items_per_page",
+                                         "kind",
+                                         "page_number",
+                                         "start_index",
+                                         "total_results"]
+
+    assert sorted(res.json()["items"][0].keys()) == ["address",
+                                                     "appointment_count",
+                                                     "date_of_birth",
+                                                     "description",
+                                                     "description_identifiers",
+                                                     "kind",
+                                                     "links",
+                                                     "matches",
+                                                     "snippet",
+                                                     "title"]
+
+
+@responses.activate
+def test_disqualified_officer_search():
+    """Searching for disqualified officer by name works."""
+
+    with open("tests/officer_results.json") as results:
+        body = results.read()
+
+    responses.add(
+        responses.GET,
+        "https://api.companieshouse.gov.uk/search/disqualified-officers?" +
+        "access_token=pk.test&q=John",
+        match_querystring=True,
+        status=200,
+        body=body,
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
+
+    s = chwrapper.Search(access_token="pk.test")
+    res = s.search_officers("John", disqualified=True)
 
     assert res.status_code == 200
     assert sorted(res.json().keys()) == ["items",
@@ -118,7 +161,8 @@ def test_company_profile():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     res = chwrapper.Search(access_token="pk.test").profile('12345')
 
@@ -141,7 +185,8 @@ def test_search_officers():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     res = chwrapper.Search(access_token="pk.test").officers("12345")
 
@@ -179,7 +224,8 @@ def test_filing_history():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     res = chwrapper.Search(access_token="pk.test").filing_history("12345")
 
@@ -216,7 +262,8 @@ def test_filing_transaction():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     res = chwrapper.Search(access_token="pk.test").filing_history(
         "12345", transaction="6789jhefD")
@@ -249,7 +296,8 @@ def test_insolvency():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     res = chwrapper.Search(access_token="pk.test").insolvency("12345")
 
@@ -285,7 +333,8 @@ def test_charges():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     res = chwrapper.Search(access_token="pk.test").charges("12345")
 
@@ -304,7 +353,8 @@ def test_charges():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     res_charge = chwrapper.Search(
         access_token="pk.test").charges("12345", charge_id="6789jhefD")
@@ -335,10 +385,94 @@ def test_registered_office():
         match_querystring=True,
         status=200,
         body=body,
-        content_type="application/json")
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
 
     res = chwrapper.Search(access_token="pk.test").address("12345")
     assert res.status_code == 200
 
     for key in sorted(res.json().keys()):
         assert key in results_keys
+
+
+@responses.activate
+def test_disqualified_natural():
+    """Get disqualified natural officers"""
+
+    with open("tests/results.json") as results:
+        body = results.read()
+
+    responses.add(
+        responses.GET,
+        "https://api.companieshouse.gov.uk/disqualified-officers/natural/" +
+        "1234?access_token=pk.test",
+        match_querystring=True,
+        status=200,
+        body=body,
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
+
+    res = chwrapper.Search(access_token="pk.test").disqualified("1234")
+
+    assert res.status_code == 200
+    assert sorted(res.json().keys()) == ["items",
+                                         "items_per_page",
+                                         "kind", "page_number",
+                                         "start_index",
+                                         "total_results"]
+
+    assert sorted(res.json()["items"][0].keys()) == ["address",
+                                                     "company_number",
+                                                     "company_status",
+                                                     "company_type",
+                                                     "date_of_cessation",
+                                                     "date_of_creation",
+                                                     "description",
+                                                     "description_identifier",
+                                                     "kind",
+                                                     "links",
+                                                     "matches",
+                                                     "snippet",
+                                                     "title"]
+
+
+@responses.activate
+def test_disqualified_corporate():
+    """Get disqualified corporate officers"""
+
+    with open("tests/results.json") as results:
+        body = results.read()
+
+    responses.add(
+        responses.GET,
+        "https://api.companieshouse.gov.uk/disqualified-officers/corporate/" +
+        "1234?access_token=pk.test",
+        match_querystring=True,
+        status=200,
+        body=body,
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
+
+    res = chwrapper.Search(access_token="pk.test").disqualified("1234",
+                                                                natural=False)
+
+    assert res.status_code == 200
+    assert sorted(res.json().keys()) == ["items",
+                                         "items_per_page",
+                                         "kind", "page_number",
+                                         "start_index",
+                                         "total_results"]
+
+    assert sorted(res.json()["items"][0].keys()) == ["address",
+                                                     "company_number",
+                                                     "company_status",
+                                                     "company_type",
+                                                     "date_of_cessation",
+                                                     "date_of_creation",
+                                                     "description",
+                                                     "description_identifier",
+                                                     "kind",
+                                                     "links",
+                                                     "matches",
+                                                     "snippet",
+                                                     "title"]

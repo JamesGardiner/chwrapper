@@ -1,13 +1,20 @@
 language: python
 python:
-  - "2.7"
-  - "3.3"
-  - "3.4"
-  - "3.5"
+- '2.7'
+- '3.3'
+- '3.4'
+- '3.5'
 install:
-  - "pip install -r requirements.txt"
-  - "pip install coveralls"
+- pip install -r requirements.txt
+- pip install coveralls
 script:
-  - py.test tests/ --cov chwrapper --cov-report term-missing
+- py.test tests/ --cov chwrapper --cov-report term-missing
+branches:
+  only:
+  - master
+  - develop
 after_success:
 - coveralls
+notifications:
+  slack:
+    secure: YS+7PN3TJx9lbdUPgOz+R123JueVGaMbY0qkAlWmWp0jU/VXTCgzB3n9Syy4ONvYAVPefYXO8hIGIN1BV9S1EyAQiTkbUPOQuOnoQYndXoJ0N/3uHamaEEhBok0EDOksSx3Pe+J6O9ZX5ufVjHOKDIscODZ+zo/jDLGAc7ExjnZtorxUPteSXZ+53S6HXzg3kyNYXNUG6DMPvXopmiRHDUPkZRNvIW7HkRkjBQrixfKQsiVY1FZ36u4iIaZkaGTVm0IC+qOeY0xvsRsQuNL5R6cN9njBWo26E6DSJ143s250GlIvopGK3x9VMBZa4T54jsPYcwT7Oy0wZN4cIsMsMEPZlfNCPTzf+gMFQ3X3ZUZ3hDluVe9JP4FT5pcIFdjtrcQTzjDZUlklvu9ux/LDIEcRH+1+PpIWe/8o8x2YkeF4IXkoEeT/Kdni3D8M4+77ohn5axzkuzrJUJBqemANSPJ49bne41Xt4A/AEgDK897q2JVyc+G6yXgI3v5muwSSYvS0BmUZLKevuyeKl6hGkZK295N0zYcnh1O46Fc1J2sU5z7ERm6qLIjD2VT7al8ZXyC0ogX1ysMI/iBqZZuWCnRqfBLy7eR34Am2+fcujpvVsNYGuMD5iKDwaZDcy7Tj8NLig178DU+I9sKja+ij1jJLanfoxw7lHdTJ+bURvOY=
