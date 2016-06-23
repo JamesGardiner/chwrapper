@@ -60,12 +60,19 @@ class Service(object):
                     ' {}')
 
         if not custom_messages:
-            custom_messages = {
-                429: cust_str.format(
-                    datetime.utcfromtimestamp(
-                        float(response.headers['X-Ratelimit-Reset']))
-                )
-            }
+            try:
+                custom_messages = {
+                    429: cust_str.format(
+                        datetime.utcfromtimestamp(
+                            float(response.headers['X-Ratelimit-Reset']))
+                    )
+                }
+            except KeyError:
+                custom_messages = {
+                    response.status_code: '{}, status code: {}'.format(
+                        response.reason, response.status_code
+                    )
+                }
 
         if response.status_code in custom_messages.keys():
             raise requests.exceptions.HTTPError(
