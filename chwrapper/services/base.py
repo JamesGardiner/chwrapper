@@ -32,6 +32,7 @@ class Service(object):
 
     def __init__(self):
         self._BASE_URI = "https://api.companieshouse.gov.uk/"
+        self._DOCUMENT_URI = "https://document-api.companieshouse.gov.uk/"
 
     def get_session(self, token=None, env=None):
         access_token = (
@@ -54,7 +55,7 @@ class Service(object):
         """A product token for use in User-Agent headers."""
         return 'chwrapper/{0}'.format(__version__)
 
-    def handle_http_error(self, response, custom_messages=None,
+    def handle_http_error(self, response, custom_messages={},
                           raise_for_status=True):
         cust_str = ('429 Too many requests made | Rate limit will reset at'
                     ' {}')
@@ -68,11 +69,12 @@ class Service(object):
                     )
                 }
             except KeyError:
-                custom_messages = {
-                    response.status_code: '{}, status code: {}'.format(
-                        response.reason, response.status_code
-                    )
-                }
+                if response.status_code != 200:
+                    custom_messages = {
+                        response.status_code: '{}, status code: {}'.format(
+                            response.reason, response.status_code
+                        )
+                    }
 
         if response.status_code in custom_messages.keys():
             raise requests.exceptions.HTTPError(

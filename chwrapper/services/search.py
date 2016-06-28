@@ -190,3 +190,18 @@ class Search(Service):
         res = self.session.get(baseuri, params=kwargs)
         self.handle_http_error(res)
         return res
+
+    def document(self, document_id, **kwargs):
+        """Requests for a document by the document id.
+           Normally the response.content can be saved as a pdf file
+
+        Args:
+           document_id (str): The id of the document retrieved.
+           kwargs (dict): additional keywords passed into
+            requests.session.get *params* keyword.
+        """
+        baseuri = '{}document/{}/content'.format(self._DOCUMENT_URI, document_id)
+
+        res = self.session.get(baseuri, params=kwargs)
+        self.handle_http_error(res)
+        return res
