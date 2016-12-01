@@ -1,5 +1,6 @@
 import responses
 import chwrapper
+import pytest
 
 
 @responses.activate
@@ -477,6 +478,173 @@ def test_disqualified_corporate():
                                                      "snippet",
                                                      "title"]
 
+
+class TestSignificantControl():
+    """Test the significant control endpoints"""
+    s = chwrapper.Search(access_token="pk.test")
+
+    with open("tests/results.json") as results:
+        results = results.read()
+
+    items = ["items",
+             "items_per_page",
+             "kind",
+             "page_number",
+             "start_index",
+             "total_results"]
+
+    @responses.activate
+    def test_list_persons_significant_control(self):
+        """Test the list of persons of significant control for a company"""
+        responses.add(
+            responses.GET,
+            ('https://api.companieshouse.gov.uk/company/12345/' +
+             'persons-with-significant-control?access_token=pk.test'),
+            match_querystring=True,
+            status=200,
+            body=self.results,
+            content_type="application/json",
+            adding_headers={'X-Ratelimit-Reset': '1460280499'})
+
+        res = self.s.persons_significant_control('12345')
+
+        assert res.status_code == 200
+        assert sorted(res.json().keys()) == self.items
+
+    @responses.activate
+    def test_list_persons_significant_control_no_company_number(self):
+        """Tests that correct exception raised when no company number used"""
+        with pytest.raises(TypeError):
+            res = self.s.persons_significant_control()
+
+    @responses.activate
+    def test_persons_significant_control_statements_true(self):
+        """Test list of persons with significant control statements for a company"""
+        responses.add(
+            responses.GET,
+            ('https://api.companieshouse.gov.uk/company/12345/' +
+             'persons-with-significant-control-statements?access_token=pk.test'),
+            match_querystring=True,
+            status=200,
+            body=self.results,
+            content_type="application/json",
+            adding_headers={'X-Ratelimit-Reset': '1460280499'})
+
+        res = self.s.persons_significant_control('12345', statements=True)
+
+        assert res.status_code == 200
+        assert sorted(res.json().keys()) == self.items
+
+    @responses.activate
+    def test_persons_significant_control_statements(self):
+        """Test list of persons with significant control statements for a
+           company when set statements set to False"""
+        responses.add(
+            responses.GET,
+            ('https://api.companieshouse.gov.uk/company/12345/' +
+             'persons-with-significant-control?access_token=pk.test'),
+            match_querystring=True,
+            status=200,
+            body=self.results,
+            content_type="application/json",
+            adding_headers={'X-Ratelimit-Reset': '1460280499'})
+
+        res = self.s.persons_significant_control('12345', statements=False)
+
+        assert res.status_code == 200
+        assert sorted(res.json().keys()) == self.items
+        assert res.url == ('https://api.companieshouse.gov.uk/company/12345/' +
+                           'persons-with-significant-control?' +
+                           'access_token=pk.test')
+
+    @responses.activate
+    def test_person_significant_control(self):
+        """Test single person of significant control for a company"""
+        responses.add(
+            responses.GET,
+            ('https://api.companieshouse.gov.uk/company/12345/' +
+             'persons-with-significant-control/individual/12345?access_token=pk.test'),
+            match_querystring=True,
+            status=200,
+            body=self.results,
+            content_type="application/json",
+            adding_headers={'X-Ratelimit-Reset': '1460280499'})
+
+        res = self.s.significant_control('12345', '12345')
+
+        assert res.status_code == 200
+        assert sorted(res.json().keys()) == self.items
+
+    @responses.activate
+    def test_person_significant_control_no_company_number(self):
+        """Tests that correct exception raised when no company number used"""
+        with pytest.raises(TypeError):
+            res = self.s.significant_control()
+
+    @responses.activate
+    def test_person_significant_control_wrong_entity_string(self):
+        """Tests that correct exception raised when wrong entity string used"""
+        with pytest.raises(Exception):
+            res = self.s.significant_control('12345',
+                                             '12345',
+                                             entity_type='hello')
+
+    @responses.activate
+    def test_legal_persons_significant_control(self):
+        """Test legal person of significant control for a company endpoint"""
+        responses.add(
+            responses.GET,
+            ('https://api.companieshouse.gov.uk/company/12345/' +
+             'persons-with-significant-control/legal-person/12345' +
+             '?access_token=pk.test'),
+            match_querystring=True,
+            status=200,
+            body=self.results,
+            content_type="application/json",
+            adding_headers={'X-Ratelimit-Reset': '1460280499'})
+
+        res = self.s.significant_control('12345', '12345', 'legal')
+
+        assert res.status_code == 200
+        assert sorted(res.json().keys()) == self.items
+
+    @responses.activate
+    def test_secure_persons_significant_control(self):
+        """Test single secure person of significant control for a company"""
+        responses.add(
+            responses.GET,
+            ('https://api.companieshouse.gov.uk/company/12345/' +
+             'persons-with-significant-control/super-secure/12345?' +
+             'access_token=pk.test'),
+            match_querystring=True,
+            status=200,
+            body=self.results,
+            content_type="application/json",
+            adding_headers={'X-Ratelimit-Reset': '1460280499'})
+
+        res = self.s.significant_control('12345', '12345', 'secure')
+
+        assert res.status_code == 200
+        assert sorted(res.json().keys()) == self.items
+
+    @responses.activate
+    def test_corporates_significant_control(self):
+        """Test single corporate entity with significant control for a company"""
+        responses.add(
+            responses.GET,
+            ('https://api.companieshouse.gov.uk/company/12345/' +
+             'persons-with-significant-control/corporate-entity/12345?' +
+             'access_token=pk.test'),
+            match_querystring=True,
+            status=200,
+            body=self.results,
+            content_type="application/json",
+            adding_headers={'X-Ratelimit-Reset': '1460280499'})
+
+        res = self.s.significant_control('12345', '12345', 'corporate')
+
+        assert res.status_code == 200
+        assert sorted(res.json().keys()) == self.items
 
 @responses.activate
 def test_getting_document():
