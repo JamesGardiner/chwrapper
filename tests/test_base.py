@@ -61,8 +61,28 @@ def test_custom_messages():
     with pytest.raises(requests.exceptions.HTTPError) as exc:
         assert Service.handle_http_error(response,
                                          custom_messages={401: "error"})
+    try:
         assert exc.value.message == 'error'
+    except AttributeError:
+        assert "error" in exc.value.args[0]
 
     with pytest.raises(requests.exceptions.HTTPError) as exc:
         assert Service.handle_http_error(response, raise_for_status=True)
+    try:
         assert "401" in exc.value.message
+    except AttributeError:
+        assert "401" in exc.value.args[0]
+
+
+@responses.activate
+def test_no_custom_messages():
+    """Check status code, when custom_messages is empty"""
+    url = 'https://api.companieshouse.gov.uk/search/companies'
+    responses.add(responses.GET, url, status=401)
+
+    Service = chwrapper.Service()
+    response = Service.get_session().get(url)
+
+    with pytest.raises(requests.exceptions.HTTPError) as exc:
+        assert Service.handle_http_error(response)
+    assert "401" in exc.value.args[0]

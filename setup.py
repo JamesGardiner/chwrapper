@@ -16,7 +16,7 @@ setup(name='chwrapper',
       packages=find_packages(),
       zip_safe=False,
       install_requires=[
-          'requests==2.9.1',
+          'requests==2.8.1',
       ],
       classifiers=[
         "Operating System :: OS Independent",

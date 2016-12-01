@@ -476,3 +476,25 @@ def test_disqualified_corporate():
                                                      "matches",
                                                      "snippet",
                                                      "title"]
+
+
+@responses.activate
+def test_getting_document():
+    """Test for the document requesting method"""
+
+    with open("tests/results.json") as results:
+        body = results.read()
+
+    responses.add(
+        responses.GET,
+        "https://document-api.companieshouse.gov.uk/document/" +
+        "1234/content?access_token=pk.test",
+        match_querystring=True,
+        status=200,
+        body=body,
+        content_type="application/json",
+        adding_headers={'X-Ratelimit-Reset': '1460280499'})
+
+    res = chwrapper.Search(access_token="pk.test").document("1234")
+
+    assert res.status_code == 200
