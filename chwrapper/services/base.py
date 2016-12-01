@@ -63,7 +63,7 @@ class Service(object):
             custom_messages = {
                 429: cust_str.format(
                     datetime.utcfromtimestamp(
-                        float(response.headers['X-Ratelimit-Reset']))
+                        float(response.headers.get('X-Ratelimit-Reset', 0)))
                 )
             }
 
