@@ -80,7 +80,7 @@ chwrapper adheres to the [PEP 8](http://www.python.org/dev/peps/pep-0008/) pytho
 Testing Guidelines
 ------------------
 
-All code that is added to chwrapper must be unit tested, and the unit test code must be submitted in the same pull request as the library code that you are submitting. code that is not unit tested will not be merged.
+All code that is added to chwrapper must be unit tested, and the unit test code must be submitted in the same pull request as the library code that you are submitting. Code that is not unit tested will not be merged.
 
 
 Getting help with git

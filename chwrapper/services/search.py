@@ -100,7 +100,7 @@ class Search(Service):
         """Search for company addresses by company number.
 
         Args:
-          num (str): Officer number to search on.
+          num (str): Company number to search on.
         """
         baseuri = self._BASE_URI + "company/{}/registered-office-address".format(num)
         res = self.session.get(baseuri)
@@ -151,7 +151,7 @@ class Search(Service):
 
     @Service.rate_limit
     def charges(self, num, charge_id=None, **kwargs):
-        """Search for a company's filling history by company number.
+        """Search for charges against a company by company number.
 
         Args:
           num (str): Company number to search on.
