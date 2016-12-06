@@ -100,7 +100,7 @@ class Search(Service):
         """Search for company addresses by company number.
 
         Args:
-          num (str): Officer number to search on.
+          num (str): Company number to search on.
         """
         baseuri = self._BASE_URI + "company/{}/registered-office-address".format(num)
         res = self.session.get(baseuri)
