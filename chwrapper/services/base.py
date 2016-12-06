@@ -22,6 +22,8 @@
 
 
 from datetime import datetime
+from functools import wraps
+from time import sleep
 import os
 import requests
 
@@ -32,6 +34,29 @@ class Service(object):
 
     def __init__(self):
         self._BASE_URI = "https://api.companieshouse.gov.uk/"
+        self._DOCUMENT_URI = "https://document-api.companieshouse.gov.uk/"
+
+    @classmethod
+    def rate_limit(cls, func):
+        """Rate limit a function using the headers returned by the API."""
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            ret = func(*args, **kwargs)
+            if ret.headers.get('X-Ratelimit-Remain', '0') == '0':
+                try:
+                    timestamp = int(ret.headers['X-Ratelimit-Reset'])
+                except KeyError as e:
+                    msg = 'No X-Ratelimit-Reset Header in response'
+                    raise KeyError(msg) from e
+                reset_dt = datetime.utcfromtimestamp(timestamp)
+                td = reset_dt - datetime.utcnow()
+                try:
+                    sleep(td.total_seconds() + 1)
+                except ValueError as e:
+                    msg = "X-Rate-Limit-Reset time is negative"
+                    raise ValueError(msg) from e
+            return ret
+        return wrapper
 
     def get_session(self, token=None, env=None):
         access_token = (
@@ -54,19 +79,8 @@ class Service(object):
         """A product token for use in User-Agent headers."""
         return 'chwrapper/{0}'.format(__version__)
 
-    def handle_http_error(self, response, custom_messages=None,
+    def handle_http_error(self, response, custom_messages={},
                           raise_for_status=True):
-        cust_str = ('429 Too many requests made | Rate limit will reset at'
-                    ' {}')
-
-        if not custom_messages:
-            custom_messages = {
-                429: cust_str.format(
-                    datetime.utcfromtimestamp(
-                        float(response.headers['X-Ratelimit-Reset']))
-                )
-            }
-
         if response.status_code in custom_messages.keys():
             raise requests.exceptions.HTTPError(
                 custom_messages[response.status_code])

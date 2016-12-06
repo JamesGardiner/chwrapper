@@ -1,8 +1,9 @@
+from datetime import datetime
+
+import chwrapper
 import pytest
 import requests
 import responses
-
-import chwrapper
 
 
 def test_Service_session():
@@ -61,8 +62,106 @@ def test_custom_messages():
     with pytest.raises(requests.exceptions.HTTPError) as exc:
         assert Service.handle_http_error(response,
                                          custom_messages={401: "error"})
+    try:
         assert exc.value.message == 'error'
+    except AttributeError:
+        assert "error" in exc.value.args[0]
 
     with pytest.raises(requests.exceptions.HTTPError) as exc:
         assert Service.handle_http_error(response, raise_for_status=True)
+    try:
         assert "401" in exc.value.message
+    except AttributeError:
+        assert "401" in exc.value.args[0]
+
+
+@responses.activate
+def test_no_custom_messages():
+    """Check status code, when custom_messages is empty"""
+    url = 'https://api.companieshouse.gov.uk/search/companies'
+    responses.add(responses.GET, url, status=401)
+
+    Service = chwrapper.Service()
+    response = Service.get_session().get(url)
+
+    with pytest.raises(requests.exceptions.HTTPError) as exc:
+        assert Service.handle_http_error(response)
+    assert "401" in exc.value.args[0]
+
+
+class TestRateLimiting():
+    """the Service.rate_limit decorator"""
+    s = chwrapper.Search(access_token="pk.test")
+
+    def current_timestamp(self):
+        return int(datetime.timestamp(datetime.utcnow()))
+
+    with open("tests/results.json") as results:
+        results = results.read()
+
+    @responses.activate
+    def test_rate_limit_renewal_missing(self):
+        """Test execurion continues when rate limit exceeded"""
+        responses.add(
+            responses.GET,
+            "https://api.companieshouse.gov.uk/search/companies?" +
+            "access_token=pk.test&q=Python",
+            match_querystring=True,
+            status=200,
+            body=self.results,
+            content_type="application/json",
+            adding_headers={'X-Ratelimit-Remain': '0'})
+
+        with pytest.raises(KeyError):
+            res = self.s.search_companies("Python")
+
+    @responses.activate
+    def test_rate_limit_expired(self):
+        """Test error raised if rate limit exceeded and no reset time"""
+        responses.add(
+            responses.GET,
+            "https://api.companieshouse.gov.uk/search/companies?" +
+            "access_token=pk.test&q=Python",
+            match_querystring=True,
+            status=200,
+            body=self.results,
+            content_type="application/json",
+            adding_headers={'X-Ratelimit-Remain': '0'})
+
+        with pytest.raises(KeyError):
+            res = self.s.search_companies("Python")
+
+    @responses.activate
+    def test_rate_limit_renewal(self):
+        """Test execution continues when rate limit exceeded"""
+        responses.add(
+            responses.GET,
+            "https://api.companieshouse.gov.uk/search/companies?" +
+            "access_token=pk.test&q=Python",
+            match_querystring=True,
+            status=200,
+            body=self.results,
+            content_type="application/json",
+            adding_headers={'X-Ratelimit-Remain': '0',
+                            'X-Ratelimit-Reset': '{}'.format(self.current_timestamp())})
+
+        res = self.s.search_companies("Python")
+        assert res.status_code == 200
+
+    @responses.activate
+    def test_negative_time_raises_error_rate_limit(self):
+        """Test that negative time values raise a ValueError Exception"""
+        time_ten_seconds_ago = self.current_timestamp() - 10
+        responses.add(
+            responses.GET,
+            "https://api.companieshouse.gov.uk/search/companies?" +
+            "access_token=pk.test&q=Python",
+            match_querystring=True,
+            status=200,
+            body=self.results,
+            content_type="application/json",
+            adding_headers={'X-Ratelimit-Remain': '0',
+                            'X-Ratelimit-Reset': '{}'.format(time_ten_seconds_ago)})
+
+        with pytest.raises(ValueError):
+            res = self.s.search_companies("Python")
