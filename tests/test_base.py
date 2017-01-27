@@ -47,6 +47,7 @@ def test_user_agent():
     assert session.headers['User-Agent'].startswith('chwrapper')
     assert 'python-requests' in session.headers['User-Agent']
 
+
 @responses.activate
 def test_custom_messages():
     """Check status code error messaging."""
@@ -119,7 +120,10 @@ def test_custom_ignore_codes_raised():
 def test_no_custom_messages():
     """Check status code, when custom_messages is empty."""
     url = 'https://api.companieshouse.gov.uk/search/companies'
-    responses.add(responses.GET, url, status=401)
+    responses.add(responses.GET,
+                  url,
+                  status=401,
+                  adding_headers={'X-Ratelimit-Remain': '1'})
 
     Service = chwrapper.Service()
     response = Service.get_session().get(url)
