@@ -11,3 +11,9 @@ translation authors keep things up-to-date.
 - Signifcant persons endpoint from @JamesGardiner
 - Rate limiting from @JamesGardiner
 - README improvements from @JamesGardiner
+
+## [0.4.0]
+### Changed
+- Rate limiter now optional
+- Remove rate limit decorator
+- Add a rate limit session adapter
