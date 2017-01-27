@@ -14,6 +14,6 @@ translation authors keep things up-to-date.
 
 ## [0.4.0]
 ### Changed
-- Rate limiter now optional
-- Remove rate limit decorator
-- Add a rate limit session adapter
+- Rate limiter now optional @JamesGardiner
+- Remove rate limit decorator @JamesGardiner
+- Add a rate limit session adapter @JamesGardiner
