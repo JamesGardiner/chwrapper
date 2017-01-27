@@ -33,20 +33,23 @@ from .base import Service
 
 
 class Search(Service):
-    """Provides an interface to the Companies House API through a Search object."""
+    """Provides an interface to the Companies House API via a Search object."""
 
-    def __init__(self, access_token=None):
+    def __init__(self, access_token=None, rate_limit=True):
         """Construct a Search object.
 
         Args:
             access_token (str): A valid Companies House API. If an
-                access token isn't specified then looks for *CompaniesHouseKey* or
-                COMPANIES_HOUSE_KEY environment variables. Defaults to None.
+                access token isn't specified then looks for *CompaniesHouseKey*
+                or COMPANIES_HOUSE_KEY environment variables. Defaults to None.
         """
         super(Search, self).__init__()
-        self.session = self.get_session(access_token)
+        self.session = self.get_session(access_token=access_token,
+                                        rate_limit=rate_limit)
+        self._ignore_codes = []
+        if rate_limit:
+            self._ignore_codes.append(429)
 
-    @Service.rate_limit
     def search_companies(self, term, **kwargs):
         """Search for companies by name.
 
@@ -62,7 +65,6 @@ class Search(Service):
         self.handle_http_error(res)
         return res
 
-    @Service.rate_limit
     def search_officers(self, term, disqualified=False, **kwargs):
         """Search for officers by name.
 
@@ -73,7 +75,8 @@ class Search(Service):
           kwargs (dict): additional keywords passed into
             requests.session.get params keyword.
         """
-        search_type = 'officers' if not disqualified else 'disqualified-officers'
+        search_type = ('officers' if not disqualified else
+                       'disqualified-officers')
         params = kwargs
         params['q'] = term
         baseuri = self._BASE_URI + 'search/{}'.format(search_type)
@@ -81,7 +84,6 @@ class Search(Service):
         self.handle_http_error(res)
         return res
 
-    @Service.rate_limit
     def appointments(self, num, **kwargs):
         """Search for officer appointments by officer number.
 
@@ -95,19 +97,18 @@ class Search(Service):
         self.handle_http_error(res)
         return res
 
-    @Service.rate_limit
     def address(self, num):
         """Search for company addresses by company number.
 
         Args:
           num (str): Company number to search on.
         """
-        baseuri = self._BASE_URI + "company/{}/registered-office-address".format(num)
+        url_root = "company/{}/registered-office-address"
+        baseuri = self._BASE_URI + url_root.format(num)
         res = self.session.get(baseuri)
         self.handle_http_error(res)
         return res
 
-    @Service.rate_limit
     def profile(self, num):
         """Search for company profile by company number.
 
@@ -119,7 +120,6 @@ class Search(Service):
         self.handle_http_error(res)
         return res
 
-    @Service.rate_limit
     def insolvency(self, num):
         """Search for insolvency records by company number.
 
@@ -131,7 +131,6 @@ class Search(Service):
         self.handle_http_error(res)
         return res
 
-    @Service.rate_limit
     def filing_history(self, num, transaction=None, **kwargs):
         """Search for a company's filling history by company number.
 
@@ -149,7 +148,6 @@ class Search(Service):
         self.handle_http_error(res)
         return res
 
-    @Service.rate_limit
     def charges(self, num, charge_id=None, **kwargs):
         """Search for charges against a company by company number.
 
@@ -168,7 +166,6 @@ class Search(Service):
         self.handle_http_error(res)
         return res
 
-    @Service.rate_limit
     def officers(self, num, **kwargs):
         """Search for a company's registered officers by company number.
 
@@ -182,11 +179,11 @@ class Search(Service):
         self.handle_http_error(res)
         return res
 
-    @Service.rate_limit
     def disqualified(self, num, natural=True, **kwargs):
-        """Search for disqualified officers by officer ID. Searches for
-           natural disqualifications by default. Specify natural=False to
-           search for corporate disqualifications.
+        """Search for disqualified officers by officer ID.
+
+        Searches for natural disqualifications by default. Specify
+        natural=False to search for corporate disqualifications.
 
         Args:
            num (str): Company number to search on.
@@ -201,11 +198,12 @@ class Search(Service):
         self.handle_http_error(res)
         return res
 
-    @Service.rate_limit
     def persons_significant_control(self, num, statements=False, **kwargs):
-        """Search for a list of persons with significant control for a
-           specified company. Specify statements=True to only search for
-           officers with statements.
+        """Search for a list of persons with significant control.
+
+        Searches for persons of significant control based on company number for
+        a specified company. Specify statements=True to only search for
+        officers with statements.
 
         Args:
             num (str, int): Company number to search on.
@@ -225,14 +223,12 @@ class Search(Service):
         self.handle_http_error(res)
         return res
 
-    @Service.rate_limit
     def significant_control(self,
                             num,
                             entity_id,
                             entity_type='individual',
                             **kwargs):
-        """Used to get details of a specific entity with significant control
-           of a specified company.
+        """Get details of a specific entity with significant control.
 
         Args:
             num (str, int): Company number to search on.
@@ -245,7 +241,6 @@ class Search(Service):
             kwargs (dict): additional keywords passed into requests.session.get
             *params* keyword.
         """
-
         # Dict mapping entity_type strings to url strings
         entities = {'individual': 'individual',
                     'corporate': 'corporate-entity',
@@ -269,7 +264,6 @@ class Search(Service):
         self.handle_http_error(res)
         return res
 
-    @Service.rate_limit
     def document(self, document_id, **kwargs):
         """Requests for a document by the document id.
            Normally the response.content can be saved as a pdf file
@@ -279,7 +273,8 @@ class Search(Service):
            kwargs (dict): additional keywords passed into
             requests.session.get *params* keyword.
         """
-        baseuri = '{}document/{}/content'.format(self._DOCUMENT_URI, document_id)
+        baseuri = '{}document/{}/content'.format(self._DOCUMENT_URI,
+                                                 document_id)
         res = self.session.get(baseuri, params=kwargs)
         self.handle_http_error(res)
         return res
