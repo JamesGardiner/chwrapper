@@ -30,7 +30,6 @@ This module provides a Search object to query the Companies House API.
 """
 
 from .base import Service
-from .base import RateLimitAdapter
 
 
 class Search(Service):
@@ -45,11 +44,11 @@ class Search(Service):
                 or COMPANIES_HOUSE_KEY environment variables. Defaults to None.
         """
         super(Search, self).__init__()
-        self.session = self.get_session(access_token)
+        self.session = self.get_session(access_token=access_token,
+                                        rate_limit=rate_limit)
         self._ignore_codes = []
         if rate_limit:
             self._ignore_codes.append(429)
-            self.session.mount(self._BASE_URI, RateLimitAdapter())
 
     def search_companies(self, term, **kwargs):
         """Search for companies by name.

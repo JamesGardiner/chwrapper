@@ -65,12 +65,15 @@ class Service(object):
         self._DOCUMENT_URI = "https://document-api.companieshouse.gov.uk/"
         self._ignore_codes = []
 
-    def get_session(self, token=None, env=None):
+    def get_session(self, access_token=None, env=None, rate_limit=True):
         access_token = (
-            token or
+            access_token or
             (env or os.environ).get('CompaniesHouseKey') or
             (env or os.environ).get('COMPANIES_HOUSE_KEY'))
         session = requests.Session()
+
+        if rate_limit:
+            session.mount(self._BASE_URI, RateLimitAdapter())
 
         session.params.update(access_token=access_token)
 
