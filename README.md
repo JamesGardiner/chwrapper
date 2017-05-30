@@ -3,6 +3,8 @@
 # chwrapper
 A python wrapper around the [Companies House UK API](https://developer.companieshouse.gov.uk/api/docs/). Returns [requests.Response objects](http://docs.python-requests.org/en/latest/api/#requests.Response).
 
+Works with Python 3.3 - 3.6.
+
 ## Example usage
 
 ```python
