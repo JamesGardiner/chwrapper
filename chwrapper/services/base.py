@@ -35,11 +35,11 @@ class RateLimitAdapter(requests.adapters.HTTPAdapter):
         super(RateLimitAdapter, self).__init__(**kwargs)
 
     def rate_limit(self, resp):
-        if resp.headers.get('X-Ratelimit-Remain', '0') == '0':
+        if resp.headers.get("X-Ratelimit-Remain", "0") == "0":
             try:
-                timestamp = int(resp.headers['X-Ratelimit-Reset'])
+                timestamp = int(resp.headers["X-Ratelimit-Reset"])
             except KeyError as e:
-                msg = 'No X-Ratelimit-Reset Header in response'
+                msg = "No X-Ratelimit-Reset Header in response"
                 raise KeyError(msg) from e
 
             reset_dt = datetime.utcfromtimestamp(timestamp)
@@ -67,9 +67,10 @@ class Service(object):
 
     def get_session(self, access_token=None, env=None, rate_limit=True):
         access_token = (
-            access_token or
-            (env or os.environ).get('CompaniesHouseKey') or
-            (env or os.environ).get('COMPANIES_HOUSE_KEY'))
+            access_token
+            or (env or os.environ).get("CompaniesHouseKey")
+            or (env or os.environ).get("COMPANIES_HOUSE_KEY")
+        )
         session = requests.Session()
 
         if rate_limit:
@@ -79,23 +80,27 @@ class Service(object):
 
         # CH API requires a key only, which is passed as the username
         session.headers.update(
-            {'User-Agent': ' '.join(
-                [self.product_token, requests.utils.default_user_agent()])})
-        session.auth = (access_token, '')
+            {
+                "User-Agent": " ".join(
+                    [self.product_token, requests.utils.default_user_agent()]
+                )
+            }
+        )
+        session.auth = (access_token, "")
         return session
 
     @property
     def product_token(self):
         """A product token for use in User-Agent headers."""
-        return 'chwrapper/{0}'.format(__version__)
+        return "chwrapper/{0}".format(__version__)
 
-    def handle_http_error(self, response, ignore=[], custom_messages={},
-                          raise_for_status=True):
+    def handle_http_error(
+        self, response, ignore=[], custom_messages={}, raise_for_status=True
+    ):
         status = response.status_code
         if status in ignore or status in self._ignore_codes:
             return None
         elif response.status_code in custom_messages.keys():
-            raise requests.exceptions.HTTPError(
-                custom_messages[response.status_code])
+            raise requests.exceptions.HTTPError(custom_messages[response.status_code])
         elif raise_for_status:
             response.raise_for_status()
