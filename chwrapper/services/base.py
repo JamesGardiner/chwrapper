@@ -95,11 +95,14 @@ class Service(object):
         return "chwrapper/{0}".format(__version__)
 
     def handle_http_error(
-        self, response, ignore=[], custom_messages={}, raise_for_status=True
+        self, response, ignore=None, custom_messages=None, raise_for_status=True
     ):
         status = response.status_code
+        ignore = ignore or []
+        custom_messages = custom_messages or {}
+
         if status in ignore or status in self._ignore_codes:
-            return None
+                return None
         elif response.status_code in custom_messages.keys():
             raise requests.exceptions.HTTPError(custom_messages[response.status_code])
         elif raise_for_status:
