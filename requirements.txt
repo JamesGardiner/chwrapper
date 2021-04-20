@@ -1,6 +1,6 @@
 cookies==2.2.1
 coverage==4.0.2
-py==1.4.30
+py==1.10.0
 pytest==2.8.2
 pytest-cov==2.2.0
 requests==2.8.1
