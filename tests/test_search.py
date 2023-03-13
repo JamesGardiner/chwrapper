@@ -137,6 +137,22 @@ class TestSearch:
         )
         res = chwrapper.Search(access_token="pk.test").officers("12345")
         assert res.status_code == 200
+        
+    @responses.activate
+    def test_search_all(self):
+        """Searching for all by company number"""
+        responses.add(
+            responses.GET,
+            "https://api.companieshouse.gov.uk/search?q=12345&"
+            + "access_token=pk.test",
+            match_querystring=True,
+            status=200,
+            body=self.results,
+            content_type="application/json",
+            adding_headers={"X-Ratelimit-Remain": "10", "X-Ratelimit-Reset": "{}".format(self.current_timestamp)},
+        )
+        res = chwrapper.Search(access_token="pk.test").search_all("12345")
+        assert res.status_code == 200
 
     @responses.activate
     def test_filing_history(self):
