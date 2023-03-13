@@ -49,6 +49,21 @@ class Search(Service):
         self._ignore_codes = []
         if rate_limit:
             self._ignore_codes.append(429)
+            
+    def search_all(self, term, **kwargs):
+        """Search for companies by any search term.
+
+        Args:
+          term (str): Search term
+          kwargs (dict): additional keywords passed into
+            requests.session.get params keyword.
+        """
+        params = kwargs
+        params['q'] = term
+        baseuri = self._BASE_URI + 'search'
+        res = self.session.get(baseuri, params=params)
+        self.handle_http_error(res)
+        return res
 
     def search_companies(self, term, **kwargs):
         """Search for companies by name.
